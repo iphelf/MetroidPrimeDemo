@@ -23,7 +23,6 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Application.targetFrameRate = 120;
         }
 
         private void Update()
