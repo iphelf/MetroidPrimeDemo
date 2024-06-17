@@ -40,7 +40,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             _jumpAction = actions.FindAction("Player/Jump", true);
         }
 
-        public Vector2 Move()
+        public Vector2 Movement()
         {
             if (_disabled) return Vector2.zero;
 
@@ -49,7 +49,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             return _currentMove;
         }
 
-        public Vector2 Look()
+        public Vector2 LookDelta()
         {
             if (_disabled) return Vector2.zero;
 
@@ -65,5 +65,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
             return look;
         }
+
+        public bool FiringBeam() => !_disabled && _fireBeamAction.IsPressed();
+
+        public bool FiredMissile() => !_disabled && _fireMissileAction.WasPressedThisFrame();
+
+        public bool Jumped() => !_disabled && _jumpAction.WasPressedThisFrame();
     }
 }
