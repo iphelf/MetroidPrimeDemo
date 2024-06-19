@@ -25,6 +25,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         private float _lastJumpTime = float.MinValue;
         private Vector3 _velocity;
 
+        [SerializeField] private CannonCtrl cannon;
+
         private void Start()
         {
             Debug.Assert(camera != null);
@@ -40,6 +42,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             UpdateLook();
             UpdateGrounding();
             UpdateLocomotion();
+            UpdateAction();
         }
 
         private void UpdateGrounding()
@@ -101,6 +104,17 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             }
 
             _character.Move(Time.deltaTime * _velocity);
+        }
+
+        private bool _wasFiringBeam;
+
+        private void UpdateAction()
+        {
+            bool isFiringBeam = _inputs.FiringBeam();
+            if (!_wasFiringBeam && isFiringBeam)
+                cannon.Fire();
+
+            _wasFiringBeam = isFiringBeam;
         }
     }
 }
