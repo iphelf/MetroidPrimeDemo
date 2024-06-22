@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a689434fb945089761575322f060ef, type: 3}
-  m_Name: game dev
+  m_Script: {fileID: 11500000, guid: 7aab9bbac9024b489ea7aa28bfd76517, type: 3}
+  m_Name: fire missile ability
   m_EditorClassIdentifier: 
-  targetFrameRate: 120
+  data:
+    type: 6
+    config: []

@@ -3627,6 +3627,50 @@ Transform:
   - {fileID: 4664385559684243593}
   m_Father: {fileID: 7424785396910775044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1504362647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504362648}
+  - component: {fileID: 1504362649}
+  m_Layer: 0
+  m_Name: Abilities
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1504362648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504362647}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1551808079}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1504362649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504362647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83def4b9e01b4d93becf5ba007adc15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1548894913
 GameObject:
   m_ObjectHideFlags: 0
@@ -4021,7 +4065,6 @@ GameObject:
   - component: {fileID: 1551808079}
   - component: {fileID: 1551808082}
   - component: {fileID: 1551808080}
-  - component: {fileID: 1551808083}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4044,6 +4087,7 @@ Transform:
   m_Children:
   - {fileID: 963194228}
   - {fileID: 2072580043}
+  - {fileID: 1504362648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1551808080
@@ -4059,13 +4103,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
-  maxSpeedOnGround: 5
-  jumpSpeed: 9
-  maxSpeedInAir: 5
-  accelerationInAir: 5
-  gravity: 20
-  groundSnappingDistance: 0.25
   cannon: {fileID: 7424785396910775045}
+  config: {fileID: 11400000, guid: 0929f1c64e200c041957e839e36fa581, type: 2}
+  groundSnappingDistance: 0.25
+  abilities: {fileID: 1504362649}
 --- !u!143 &1551808082
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4091,22 +4132,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1551808083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551808078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9df88eaab6d4703aa72d5ed9dbd48ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
-  moveSmoothTime: 0.1
-  gamepadRotationSpeed: 150
-  mouseSensitivity: 0.08
 --- !u!1 &1559369113
 GameObject:
   m_ObjectHideFlags: 0
@@ -44756,7 +44781,7 @@ MonoBehaviour:
   chargedCannonParticle: {fileID: 9003293596455832861}
   chargedEmission: {fileID: 6877990547337338961}
   muzzleFlash: {fileID: 8524580753973788328}
-  punchStrength: 0.2
+  punchDistance: 0.2
   punchVibrato: 5
   punchDuration: 0.3
   punchElasticity: 0.5
