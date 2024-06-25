@@ -15395,7 +15395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8787193440495501565, guid: 73784cc070a71be43b1a5db6437c154b, type: 3}
       propertyPath: m_Name
-      value: Energy
+      value: EnergyPickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20402,7 +20402,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 139909461346263497, guid: 598861b56f10a5d4e905079e2d921821, type: 3}
       propertyPath: m_Name
-      value: ChargeBeam
+      value: ChargeBeamPickup
       objectReference: {fileID: 0}
     - target: {fileID: 4145475082924784677, guid: 598861b56f10a5d4e905079e2d921821, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20452,6 +20452,66 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 598861b56f10a5d4e905079e2d921821, type: 3}
+--- !u!1001 &4215738263049543945
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090467929510436000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919823015801054963, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      propertyPath: m_Name
+      value: MissileTankPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6967034228909655302, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: bdd28e6c6246bc142b1642ee9f2d0cde, type: 3}
 --- !u!199 &4424285246852175140
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -44794,6 +44854,66 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &7027452591098912658
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041168062802347614, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964618484697244143, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      propertyPath: m_Name
+      value: EnergyTankPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6982676879583602651, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: d4957e4c7f2be3e43b84d10da32bd35f, type: 3}
 --- !u!199 &7194143745438900042
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -54916,7 +55036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6209512200475185016, guid: 57f45e1168673db4984899572798606e, type: 3}
       propertyPath: m_Name
-      value: Missile
+      value: MissilePickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59906,3 +60026,5 @@ SceneRoots:
   - {fileID: 2105530093534171321}
   - {fileID: 8666865333779838029}
   - {fileID: 4138258586668372568}
+  - {fileID: 7027452591098912658}
+  - {fileID: 4215738263049543945}

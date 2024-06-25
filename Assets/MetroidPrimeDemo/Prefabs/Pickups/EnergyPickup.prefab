@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8489822131235800441}
   - component: {fileID: 2527873854782503190}
   m_Layer: 0
-  m_Name: Energy
+  m_Name: EnergyPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

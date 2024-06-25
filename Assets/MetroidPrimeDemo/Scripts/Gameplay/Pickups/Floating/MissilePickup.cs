@@ -9,7 +9,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Pickups.Floating
 
         protected override void OnPickup(PlayerCharacterCtrl player)
         {
-            player.Attributes.Missiles += count;
+            player.Attributes.Missiles = Mathf.Clamp(
+                player.Attributes.Missiles + count,
+                0, player.Attributes.MaxMissiles
+            );
         }
 
         private void Update()

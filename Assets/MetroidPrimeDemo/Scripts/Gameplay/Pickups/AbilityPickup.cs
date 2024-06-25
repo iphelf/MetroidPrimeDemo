@@ -1,9 +1,9 @@
 ﻿using MetroidPrimeDemo.Scripts.Data;
 using UnityEngine;
 
-namespace MetroidPrimeDemo.Scripts.Gameplay.Pickups.PowerUps
+namespace MetroidPrimeDemo.Scripts.Gameplay.Pickups
 {
-    public class AbilityPowerUp : Pickup
+    public class AbilityPickup : Pickup
     {
         [SerializeField] private InputConfig inputConfig;
         [SerializeField] private AbilityConfig abilityConfig;
