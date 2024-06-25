@@ -1,12 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Player
 {
+    [Serializable]
     public class AttributeSet
     {
         #region Build
 
-        // public float Health;
+        public float MaxHealth;
+        public int MaxMissiles;
+
+        #endregion
+
+        #region Stats
+
+        public float Health;
+        public int Missiles;
 
         #endregion
 

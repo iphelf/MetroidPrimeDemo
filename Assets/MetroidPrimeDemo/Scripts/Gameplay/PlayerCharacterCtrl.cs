@@ -14,11 +14,13 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         private CharacterController _character;
 
         [SerializeField] private PlayerConfig config;
-        [HideInInspector] public AttributeSet Attributes;
+        public AttributeSet Attributes;
 
         [SerializeField] private float groundSnappingDistance = 0.25f;
 
         [SerializeField] private AbilitySystem abilities;
+
+        public Vector3 Center => transform.position + Vector3.up;
 
         private void Start()
         {

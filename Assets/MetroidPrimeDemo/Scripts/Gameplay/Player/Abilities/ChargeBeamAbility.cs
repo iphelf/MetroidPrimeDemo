@@ -1,4 +1,5 @@
 ﻿using MetroidPrimeDemo.Scripts.Data;
+using MetroidPrimeDemo.Scripts.Gameplay.Pickups;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -80,6 +81,15 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
                 _charging = false;
                 _chargeBeginTime = float.MaxValue;
                 _fullyCharged = false;
+            }
+
+            if (_charging)
+            {
+                foreach (var go in GameObject.FindGameObjectsWithTag("FloatingPickup"))
+                {
+                    var pickup = go.GetComponent<FloatingPickup>();
+                    pickup.MoveTowards(player.Center);
+                }
             }
         }
     }
