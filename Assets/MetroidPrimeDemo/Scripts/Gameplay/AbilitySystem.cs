@@ -30,6 +30,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
                 AbilityType.FireBeam => gameObject.AddComponent<FireBeamAbility>(),
                 AbilityType.Aim => gameObject.AddComponent<AimAbility>(),
                 AbilityType.FireMissile => gameObject.AddComponent<FireMissileAbility>(),
+                AbilityType.ChargeBeam => gameObject.AddComponent<ChargeBeamAbility>(),
                 _ => null,
             };
             if (ability != null)

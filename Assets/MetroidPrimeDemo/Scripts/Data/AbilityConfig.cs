@@ -14,6 +14,7 @@ namespace MetroidPrimeDemo.Scripts.Data
         FireBeam = 4,
         Aim = 5,
         FireMissile = 6,
+        ChargeBeam = 7,
 
         Custom = 99,
     }

@@ -9,7 +9,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     public class PlayerCharacterCtrl : MonoBehaviour
     {
         [SerializeField] private new Camera camera;
-        [SerializeField] private CannonCtrl cannon;
+        public CannonCtrl cannon;
 
         private CharacterController _character;
 
@@ -74,11 +74,6 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         {
             transform.localEulerAngles = new Vector3(0.0f, yaw, 0.0f);
             camera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
-        }
-
-        public void FireCannon()
-        {
-            cannon.Fire();
         }
     }
 }

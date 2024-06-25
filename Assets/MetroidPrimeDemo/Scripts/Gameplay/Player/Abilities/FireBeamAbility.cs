@@ -19,7 +19,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         {
             bool isFiringBeam = FiringBeam();
             if (!_wasFiringBeam && isFiringBeam)
-                player.FireCannon();
+                player.cannon.Fire();
             _wasFiringBeam = isFiringBeam;
         }
     }
