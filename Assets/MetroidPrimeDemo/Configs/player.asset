@@ -32,6 +32,6 @@ MonoBehaviour:
   - enabled: 1
     input: {fileID: 11400000, guid: 826718176490a1241addb0e332e6898f, type: 2}
     ability: {fileID: 11400000, guid: cb64bb0ad3045bb40ada659fa6f6f249, type: 2}
-  - enabled: 1
+  - enabled: 0
     input: {fileID: 11400000, guid: cf6cbee3c719eb14c8e9dca425c7de5b, type: 2}
     ability: {fileID: 11400000, guid: 4cea54f34aa1a974ab661d1efeca5c5d, type: 2}

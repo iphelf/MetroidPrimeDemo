@@ -18,7 +18,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         [SerializeField] private float groundSnappingDistance = 0.25f;
 
-        [SerializeField] private AbilitySystem abilities;
+        public AbilitySystem abilities;
 
         public Vector3 Center => transform.position + Vector3.up;
 
@@ -33,7 +33,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
             abilities.Initialize(this);
             foreach (var entry in config.initialAbilities)
-                abilities.GrantAbility(entry.input, entry.ability);
+                if (entry.enabled)
+                    abilities.GrantAbility(entry.input, entry.ability);
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

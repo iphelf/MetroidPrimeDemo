@@ -21,11 +21,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
         public void Update()
         {
-            if (!Attributes.WasGrounded) return;
+            if (!attributes.WasGrounded) return;
             if (!Jumped()) return;
-            Attributes.Velocity.y += speed;
-            Attributes.LastJumpTime = Time.time;
-            Attributes.WasGrounded = false;
+            attributes.Velocity.y += speed;
+            attributes.LastJumpTime = Time.time;
+            attributes.WasGrounded = false;
         }
     }
 }

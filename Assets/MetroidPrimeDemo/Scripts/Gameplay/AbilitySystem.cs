@@ -35,7 +35,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             };
             if (ability != null)
             {
-                ability.Attributes = _player.Attributes;
+                ability.attributes = _player.Attributes;
                 ability.player = _player;
             }
 
