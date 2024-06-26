@@ -8,14 +8,14 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player
     {
         #region Build
 
-        [Header("Build")] public float maxHealth;
+        [Header("Build")] public float maxHealth = 99;
         public int maxMissiles;
 
         #endregion
 
         #region Stats
 
-        [Header("Stats")] public float health;
+        [Header("Stats")] public float health = 1;
         public int missiles;
 
         #endregion
