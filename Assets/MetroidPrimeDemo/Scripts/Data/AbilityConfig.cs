@@ -24,10 +24,26 @@ namespace MetroidPrimeDemo.Scripts.Data
     {
         public AbilityType type = AbilityType.None;
         public List<ConfigEntry> config = new();
+        public List<ConfigEntry<GameObject>> dependencies = new();
 
         public bool TryReadConfig(string key, out string value)
         {
             var entry = config.Find(entry => entry.key == key);
+            if (entry == null)
+            {
+                value = null;
+                return false;
+            }
+            else
+            {
+                value = entry.value;
+                return true;
+            }
+        }
+
+        public bool TryReadDependency(string key, out GameObject value)
+        {
+            var entry = dependencies.Find(entry => entry.key == key);
             if (entry == null)
             {
                 value = null;

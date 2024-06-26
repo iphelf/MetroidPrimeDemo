@@ -1,4 +1,5 @@
-﻿using MetroidPrimeDemo.Scripts.Data;
+﻿using System.Collections.Generic;
+using MetroidPrimeDemo.Scripts.Data;
 using MetroidPrimeDemo.Scripts.Gameplay.Player;
 using MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     public class AbilitySystem : MonoBehaviour
     {
         private PlayerCharacterCtrl _player;
+        private readonly HashSet<AbilityType> _abilities = new();
 
         public void Initialize(PlayerCharacterCtrl player)
         {
@@ -16,6 +18,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         public void GrantAbility(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
+            if (!_abilities.Add(abilityConfig.data.type)) return;
             Ability ability = InstantiateAbility(abilityConfig.data.type);
             ability.Initialize(inputConfig, abilityConfig);
         }

@@ -9,4 +9,12 @@ namespace MetroidPrimeDemo.Scripts.General
         public string value = "";
         private string Name => key;
     }
+
+    [Serializable]
+    public class ConfigEntry<T>
+    {
+        public string key = "";
+        public T value = default;
+        private string Name => key;
+    }
 }

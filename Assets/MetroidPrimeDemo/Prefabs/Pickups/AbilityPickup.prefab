@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f17decc938b416d8a26e184c92c8127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputConfig: {fileID: 11400000, guid: cf6cbee3c719eb14c8e9dca425c7de5b, type: 2}
-  abilityConfig: {fileID: 11400000, guid: 4cea54f34aa1a974ab661d1efeca5c5d, type: 2}
+  inputConfig: {fileID: 0}
+  abilityConfig: {fileID: 0}
 --- !u!33 &2787499513332492077
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -226,9 +226,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Charge
+  m_text: 'Ability
 
-    Beam'
+    Name'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

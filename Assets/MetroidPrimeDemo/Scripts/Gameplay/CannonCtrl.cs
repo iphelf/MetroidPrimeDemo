@@ -5,6 +5,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 {
     public class CannonCtrl : MonoBehaviour
     {
+        public Transform missileSlot;
+
         [SerializeField] private ParticleSystem cannonParticleShooter;
         [SerializeField] private ParticleSystem chargingParticle;
         [SerializeField] private ParticleSystem chargedParticle;
@@ -18,11 +20,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         [SerializeField] private float punchDuration = .3f;
         [SerializeField, Range(0, 1)] private float punchElasticity = .5f;
 
-        private void Recoil()
+        public void Recoil(float punchDistanceScale = 1.0f)
         {
             transform.DOComplete();
             transform.DOPunchPosition(
-                new Vector3(0, 0, -punchDistance),
+                new Vector3(0, 0, -punchDistance * punchDistanceScale),
                 punchDuration, punchVibrato, punchElasticity
             );
         }

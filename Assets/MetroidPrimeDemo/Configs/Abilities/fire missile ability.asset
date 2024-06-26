@@ -15,3 +15,6 @@ MonoBehaviour:
   data:
     type: 6
     config: []
+    dependencies:
+    - key: missilePrefab
+      value: {fileID: 5492018896613555523, guid: ecd759a9f0b786c438d7f9143b760475, type: 3}
