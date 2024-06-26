@@ -11,7 +11,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         [SerializeField] private float cooldown = 1.0f;
         [SerializeField] private float lifetime = 5.0f;
         [SerializeField] private GameObject missilePrefab;
-        private float _lastLaunchTime = float.MinValue;
+        private float _lastFireTime = float.MinValue;
 
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
@@ -23,7 +23,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         private void Update()
         {
             if (!_input.WasPressedThisFrame()) return;
-            if (Time.time < _lastLaunchTime + cooldown) return;
+            if (Time.time < _lastFireTime + cooldown) return;
             if (attributes.missiles < 1) return;
 
             --attributes.missiles;
@@ -32,7 +32,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             var ctrl = missile.GetComponent<MissileCtrl>();
             ctrl.Launch(attributes.lockTarget, lifetime);
             player.cannon.Recoil(2.0f);
-            _lastLaunchTime = Time.time;
+            _lastFireTime = Time.time;
         }
     }
 }
