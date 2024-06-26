@@ -8,29 +8,31 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player
     {
         #region Build
 
-        public float MaxHealth;
+        [Header("Build")] public float MaxHealth;
         public int MaxMissiles;
 
         #endregion
 
         #region Stats
 
-        public float Health;
+        [Header("Stats")] public float Health;
         public int Missiles;
 
         #endregion
 
         #region Environmental
 
-        public float Gravity;
+        [Header("Environmental")] public float Gravity;
 
         #endregion
 
         #region Temporary
 
-        public Vector3 Velocity;
+        [Header("Temporary")] public Vector3 Velocity;
         public bool WasGrounded;
         public float LastJumpTime = float.MinValue;
+        public Aimable AimTarget;
+        public Aimable LockTarget;
 
         #endregion
     }

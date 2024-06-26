@@ -1,4 +1,5 @@
 ﻿using MetroidPrimeDemo.Scripts.Data;
+using MetroidPrimeDemo.Scripts.General;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,15 +44,16 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
         private void Update()
         {
+            player.GetRotation(out _pitch, out _yaw);
+            if (attributes.LockTarget is not null)
+                return;
+
             Vector2 lookDelta = LookDelta();
-
             _yaw += lookDelta.x;
-            _yaw %= 360.0f;
-
             _pitch += lookDelta.y;
-            _pitch = Mathf.Clamp(_pitch, -89f, 89f);
 
-            player.SetRotation(_yaw, _pitch);
+            GeometryHelpers.Normalize(ref _pitch, ref _yaw);
+            player.SetRotation(_pitch, _yaw);
         }
     }
 }

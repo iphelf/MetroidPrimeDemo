@@ -8,7 +8,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     [RequireComponent(typeof(CharacterController))]
     public class PlayerCharacterCtrl : MonoBehaviour
     {
-        [SerializeField] private new Camera camera;
+        public new Camera camera;
         public CannonCtrl cannon;
 
         private CharacterController _character;
@@ -21,6 +21,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         public AbilitySystem abilities;
 
         public Vector3 Center => transform.position + Vector3.up;
+
+        private float _pitch;
+        private float _yaw;
 
         private void Start()
         {
@@ -35,6 +38,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             foreach (var entry in config.initialAbilities)
                 if (entry.enabled)
                     abilities.GrantAbility(entry.input, entry.ability);
+
+            _yaw = transform.localEulerAngles.y;
+            _pitch = camera.transform.localEulerAngles.x;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -73,10 +79,18 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             Attributes.WasGrounded = isGrounded;
         }
 
-        public void SetRotation(float yaw, float pitch)
+        public void GetRotation(out float pitch, out float yaw)
         {
-            transform.localEulerAngles = new Vector3(0.0f, yaw, 0.0f);
-            camera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+            pitch = _pitch;
+            yaw = _yaw;
+        }
+
+        public void SetRotation(float pitch, float yaw)
+        {
+            _yaw = yaw;
+            _pitch = pitch;
+            transform.localEulerAngles = new Vector3(0.0f, _yaw, 0.0f);
+            camera.transform.localEulerAngles = new Vector3(_pitch, 0, 0);
         }
     }
 }
