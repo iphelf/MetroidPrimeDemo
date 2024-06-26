@@ -62,7 +62,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             targetLock.localEulerAngles = new Vector3(0.0f, 0.0f, targetLockRotationZ);
             targetLock.position = player.camera.WorldToScreenPoint(worldPosition);
 
-            GeometryHelpers.LookAt(player.camera.transform.position, worldPosition, out var pitch, out var yaw);
+            GeometryHelpers.Look(worldPosition - player.camera.transform.position, out var pitch, out var yaw);
             GeometryHelpers.Normalize(ref pitch, ref yaw);
             player.GetRotation(out _pitch, out _yaw);
             _pitch = Mathf.SmoothDampAngle(_pitch, pitch, ref _pitchDampVelocity, lockingSmoothTime);
