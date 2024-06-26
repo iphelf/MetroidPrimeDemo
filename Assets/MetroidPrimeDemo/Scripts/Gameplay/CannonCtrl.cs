@@ -7,11 +7,13 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     {
         public Transform missileSlot;
 
-        [SerializeField] private ParticleSystem cannonParticleShooter;
+        [SerializeField] private ParticleSystem regularShooter;
         [SerializeField] private ParticleSystem chargingParticle;
         [SerializeField] private ParticleSystem chargedParticle;
         [SerializeField] private ParticleSystem lineParticles;
-        [SerializeField] private ParticleSystem chargedCannonParticle;
+        [SerializeField] private ParticleSystem underChargeShooter;
+        [SerializeField] private ParticleSystem partiallyChargedShooter;
+        [SerializeField] private ParticleSystem fullyChargedShooter;
         [SerializeField] private ParticleSystem chargedEmission;
         [SerializeField] private ParticleSystem muzzleFlash;
 
@@ -19,6 +21,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         [SerializeField] private int punchVibrato = 5;
         [SerializeField] private float punchDuration = .3f;
         [SerializeField, Range(0, 1)] private float punchElasticity = .5f;
+
+        public BeamParticleCtrl regularBeam;
+        public BeamParticleCtrl underChargeBeam;
+        public BeamParticleCtrl partiallyChargedBeam;
+        public BeamParticleCtrl fullyChargedBeam;
 
         public void Recoil(float punchDistanceScale = 1.0f)
         {
@@ -32,7 +39,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         public void Fire()
         {
             muzzleFlash.Play();
-            cannonParticleShooter.Play();
+            regularShooter.Play();
             Recoil();
         }
 
@@ -69,15 +76,21 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             chargedEmission.Stop();
         }
 
+        public void FireUnderCharge()
+        {
+            underChargeShooter.Play();
+            Recoil();
+        }
+
         public void FirePartiallyCharged()
         {
-            chargedCannonParticle.Play();
+            partiallyChargedShooter.Play();
             Recoil();
         }
 
         public void FireFullyCharged()
         {
-            chargedCannonParticle.Play();
+            fullyChargedShooter.Play();
             Recoil();
         }
     }

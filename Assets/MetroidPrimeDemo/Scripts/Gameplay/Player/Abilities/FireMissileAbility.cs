@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 {
-    public class FireMissileAbility : Ability
+    public class FireMissileAbility : SimpleAttackAbility
     {
         private InputAction _input;
         [SerializeField] private float cooldown = 1.0f;
@@ -16,6 +16,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
             _input = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
+            InitializeDamage(abilityConfig);
             if (!abilityConfig.data.TryReadDependency(nameof(missilePrefab), out missilePrefab))
                 missilePrefab = null;
         }
@@ -30,7 +31,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
             var missile = DynamicRoot.Instantiate(missilePrefab, player.cannon.missileSlot);
             var ctrl = missile.GetComponent<MissileCtrl>();
-            ctrl.Launch(attributes.lockTarget, lifetime);
+            ctrl.Launch(attributes.lockTarget, lifetime, OnDamage);
             player.cannon.Recoil(2.0f);
             _lastFireTime = Time.time;
         }

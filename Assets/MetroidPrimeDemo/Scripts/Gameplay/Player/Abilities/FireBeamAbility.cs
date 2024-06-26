@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 {
-    public class FireBeamAbility : Ability
+    public class FireBeamAbility : SimpleAttackAbility
     {
         private InputAction _input;
         [SerializeField] private float cooldown = 0.18f;
@@ -16,6 +16,13 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
             _input = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
+            InitializeDamage(abilityConfig);
+            player.cannon.regularBeam.OnDamage.AddListener(OnDamage);
+        }
+
+        private void OnDestroy()
+        {
+            player.cannon.regularBeam.OnDamage.RemoveListener(OnDamage);
         }
 
         private bool FiringBeam() => _input.IsPressed();

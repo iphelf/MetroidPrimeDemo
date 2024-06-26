@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     type: 4
-    config: []
+    config:
+    - key: damage
+      value: 10
+    dependencies: []

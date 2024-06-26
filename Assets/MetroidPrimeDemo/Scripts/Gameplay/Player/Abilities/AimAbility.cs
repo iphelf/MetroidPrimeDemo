@@ -61,7 +61,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             _wasAiming = false;
             attributes.lockTarget = null;
             attributes.aimTarget = null;
-            foreach (var aimable in Aimable.EnabledAimableSet)
+            foreach (var aimable in Aimable.All)
                 aimable.OnDisabled -= OnAimableDisabled;
         }
 
@@ -80,7 +80,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             Aimable target = null;
             float maxSqrDistance = _sqrRadius * radiusScale * radiusScale;
 
-            foreach (var aimable in Aimable.EnabledAimableSet)
+            foreach (var aimable in Aimable.All)
             {
                 {
                     Vector3 direction = aimable.transform.position - player.camera.transform.position;

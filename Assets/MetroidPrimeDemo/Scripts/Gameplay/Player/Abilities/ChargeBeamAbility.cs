@@ -10,6 +10,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         [SerializeField] private float delay = 1.0f;
         [SerializeField] private float partialDuration = 0.2f;
         [SerializeField] private float fullDuration = 0.5f;
+        [SerializeField] private float underChargeDamage = 10.0f;
+        [SerializeField] private float partialChargeDamage = 35.0f;
+        [SerializeField] private float fullChargeDamage = 50.0f;
 
         private InputAction _input;
 
@@ -23,6 +26,29 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
             _input = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
+
+            player.cannon.underChargeBeam.OnDamage.AddListener(OnUnderChargeDamage);
+            player.cannon.partiallyChargedBeam.OnDamage.AddListener(OnPartialChargeDamage);
+            player.cannon.fullyChargedBeam.OnDamage.AddListener(OnFullChargeDamage);
+        }
+
+        private void OnDestroy()
+        {
+            player.cannon.underChargeBeam.OnDamage.RemoveListener(OnUnderChargeDamage);
+            player.cannon.partiallyChargedBeam.OnDamage.RemoveListener(OnPartialChargeDamage);
+            player.cannon.fullyChargedBeam.OnDamage.RemoveListener(OnFullChargeDamage);
+        }
+
+        private void OnUnderChargeDamage(Aimable other) => OnDamage(other, underChargeDamage);
+        private void OnPartialChargeDamage(Aimable other) => OnDamage(other, partialChargeDamage);
+        private void OnFullChargeDamage(Aimable other) => OnDamage(other, fullChargeDamage);
+
+        private void OnDamage(Aimable other, float damage)
+        {
+            if (other is EnemyCharacterCtrl enemy)
+                enemy.DealDamage(damage);
+            else
+                Destroy(other.gameObject);
         }
 
         private void Update()
@@ -73,7 +99,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
                 else if (_charging)
                 {
                     player.cannon.StopCharging();
-                    player.cannon.Fire();
+                    player.cannon.FireUnderCharge();
                 }
 
                 _pressing = false;

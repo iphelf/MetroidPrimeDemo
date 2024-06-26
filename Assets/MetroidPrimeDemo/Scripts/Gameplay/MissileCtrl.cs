@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using MetroidPrimeDemo.Scripts.General;
 using UnityEngine;
 
@@ -16,25 +15,26 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         private bool _flying;
         private Aimable _target;
         private float _lifetime;
-        private readonly HashSet<GameObject> _damageSet = new();
+        private Action<Aimable> _onDamage;
 
         private void Start()
         {
-            triggerListener.OnTriggerEnterEvent.AddListener(OnHit);
+            triggerListener.OnTriggerEnterEvent.AddListener(OnTrigger);
             missileObject.SetActive(true);
             explosionObject.SetActive(false);
         }
 
         private void OnDestroy()
         {
-            triggerListener.OnTriggerEnterEvent.RemoveListener(OnHit);
+            triggerListener.OnTriggerEnterEvent.RemoveListener(OnTrigger);
         }
 
-        public void Launch(Aimable target, float lifetime)
+        public void Launch(Aimable target, float lifetime, Action<Aimable> onDamage)
         {
             _flying = true;
             _target = target;
             _lifetime = lifetime;
+            _onDamage = onDamage;
             if (_target is not null)
                 _target.OnDisabled += OnAimableDisabled;
         }
@@ -69,7 +69,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             transform.position += speed * Time.deltaTime * transform.forward;
         }
 
-        private void OnHit(Collider other)
+        private void OnTrigger(Collider other)
         {
             StartCoroutine(Explode());
         }
@@ -83,19 +83,14 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             Collider[] hitColliders = new Collider[10];
             int hitCount = Physics.OverlapSphereNonAlloc(
                 transform.position, explosionRadius, hitColliders,
-                LayerMask.GetMask("Damageable")
+                Aimable.LayerMask
             );
             for (int i = 0; i < hitCount; ++i)
-                OnDamage(hitColliders[i].gameObject);
+                if (Aimable.IsValid(hitColliders[i].gameObject, out var aimable))
+                    _onDamage(aimable);
             await Awaitable.WaitForSecondsAsync(1.0f);
 
             Destroy(gameObject);
-        }
-
-        private void OnDamage(GameObject other)
-        {
-            if (!_damageSet.Add(other)) return;
-            Destroy(other);
         }
     }
 }
