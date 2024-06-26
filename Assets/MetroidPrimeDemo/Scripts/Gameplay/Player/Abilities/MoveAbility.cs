@@ -41,15 +41,15 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             Vector2 movement = Movement();
             Vector3 inputDir = transform.TransformVector(movement.x, 0.0f, movement.y);
 
-            if (attributes.WasGrounded)
-                attributes.Velocity = maxSpeedOnGround * inputDir;
+            if (attributes.wasGrounded)
+                attributes.velocity = maxSpeedOnGround * inputDir;
             else
             {
-                attributes.Velocity += Time.deltaTime * accelerationInAir * inputDir;
-                float verticalVelocity = attributes.Velocity.y;
-                attributes.Velocity = Vector3.ProjectOnPlane(attributes.Velocity, Vector3.up);
-                attributes.Velocity = Vector3.ClampMagnitude(attributes.Velocity, maxSpeedInAir);
-                attributes.Velocity.y = verticalVelocity;
+                attributes.velocity += Time.deltaTime * accelerationInAir * inputDir;
+                float verticalVelocity = attributes.velocity.y;
+                attributes.velocity = Vector3.ProjectOnPlane(attributes.velocity, Vector3.up);
+                attributes.velocity = Vector3.ClampMagnitude(attributes.velocity, maxSpeedInAir);
+                attributes.velocity.y = verticalVelocity;
             }
         }
     }

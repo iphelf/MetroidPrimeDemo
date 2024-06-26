@@ -27,12 +27,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         private void LateUpdate()
         {
-            bool aimable = player.Attributes.AimTarget is not null;
-            bool locked = player.Attributes.LockTarget is not null;
+            bool aimable = player.attributes.aimTarget is not null;
+            bool locked = player.attributes.lockTarget is not null;
             if (locked)
             {
                 lockSeal.gameObject.SetActive(true);
-                UpdateLockedAim(player.Attributes.LockTarget.transform.position);
+                UpdateLockedAim(player.attributes.lockTarget.transform.position);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
                 if (aimable)
                 {
                     targetLock.gameObject.SetActive(true);
-                    UpdateFreeAim(player.Attributes.AimTarget.transform.position);
+                    UpdateFreeAim(player.attributes.aimTarget.transform.position);
                 }
                 else
                 {

@@ -4,8 +4,8 @@
     {
         protected override void OnPickup(PlayerCharacterCtrl player)
         {
-            player.Attributes.MaxHealth += 100.0f;
-            player.Attributes.Health = player.Attributes.MaxHealth;
+            player.attributes.maxHealth += 100.0f;
+            player.attributes.health = player.attributes.maxHealth;
         }
     }
 }

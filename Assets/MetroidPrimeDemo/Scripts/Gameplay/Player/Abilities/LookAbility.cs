@@ -45,7 +45,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         private void Update()
         {
             player.GetRotation(out _pitch, out _yaw);
-            if (attributes.LockTarget is not null)
+            if (attributes.lockTarget is not null)
                 return;
 
             Vector2 lookDelta = LookDelta();

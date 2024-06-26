@@ -8,9 +8,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Pickups.Floating
 
         protected override void OnPickup(PlayerCharacterCtrl player)
         {
-            player.Attributes.Health = Mathf.Clamp(
-                player.Attributes.Health + amount,
-                0.0f, player.Attributes.MaxHealth
+            player.attributes.health = Mathf.Clamp(
+                player.attributes.health + amount,
+                0.0f, player.attributes.maxHealth
             );
         }
     }

@@ -8,8 +8,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Pickups.Upgrades
 
         protected override void OnPickup(PlayerCharacterCtrl player)
         {
-            player.Attributes.MaxMissiles += count;
-            player.Attributes.Missiles += count;
+            player.attributes.maxMissiles += count;
+            player.attributes.missiles += count;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using MetroidPrimeDemo.Scripts.Data;
+﻿using MetroidPrimeDemo.Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,19 +36,19 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             // TODO: 需要考虑锁定目标Destroy的情况
             bool isAiming = _input.IsPressed();
 
-            attributes.AimTarget = FindAimTarget();
+            attributes.aimTarget = FindAimTarget();
 
             if (isAiming)
             {
                 if (!_wasAiming)
                 {
-                    attributes.LockTarget = attributes.AimTarget;
+                    attributes.lockTarget = attributes.aimTarget;
                 }
             }
             else
             {
                 if (_wasAiming)
-                    attributes.LockTarget = null;
+                    attributes.lockTarget = null;
             }
 
             _wasAiming = isAiming;
@@ -58,8 +57,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         private void OnDisable()
         {
             _wasAiming = false;
-            attributes.LockTarget = null;
-            attributes.AimTarget = null;
+            attributes.lockTarget = null;
+            attributes.aimTarget = null;
         }
 
         private Aimable FindAimTarget()

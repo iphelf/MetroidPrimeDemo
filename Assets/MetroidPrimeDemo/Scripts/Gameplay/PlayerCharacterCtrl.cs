@@ -14,7 +14,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         private CharacterController _character;
 
         [SerializeField] private PlayerConfig config;
-        public AttributeSet Attributes;
+        public AttributeSet attributes;
 
         [SerializeField] private float groundSnappingDistance = 0.25f;
 
@@ -29,9 +29,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         {
             _character = GetComponent<CharacterController>();
 
-            Attributes = new AttributeSet
+            attributes = new AttributeSet
             {
-                Gravity = config.gravity
+                gravity = config.gravity
             };
 
             abilities.Initialize(this);
@@ -48,35 +48,35 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         private void Update()
         {
-            if (Attributes.WasGrounded)
-                Attributes.Velocity.y = 0.0f;
+            if (attributes.wasGrounded)
+                attributes.velocity.y = 0.0f;
             else
-                Attributes.Velocity.y -= Time.deltaTime * Attributes.Gravity;
+                attributes.velocity.y -= Time.deltaTime * attributes.gravity;
 
             UpdateGrounding();
 
-            _character.Move(Time.deltaTime * Attributes.Velocity);
+            _character.Move(Time.deltaTime * attributes.velocity);
         }
 
         private void UpdateGrounding()
         {
-            if (Time.time - 0.5f < Attributes.LastJumpTime) return;
+            if (Time.time - 0.5f < attributes.lastJumpTime) return;
 
-            float groundCheckDistance = Attributes.WasGrounded
+            float groundCheckDistance = attributes.wasGrounded
                 ? _character.skinWidth + groundSnappingDistance
                 : _character.skinWidth + 0.01f;
             bool isGrounded = PhysicsHelpers.IsGrounded(
                 _character, groundCheckDistance, -1,
                 out var distanceFromGround);
 
-            if (Attributes.WasGrounded && isGrounded)
+            if (attributes.wasGrounded && isGrounded)
             {
                 // snapping to the ground while on the ground
                 if (Mathf.Abs(distanceFromGround - _character.skinWidth) > 0.0f)
                     _character.Move(Vector3.down * (distanceFromGround - _character.skinWidth));
             }
 
-            Attributes.WasGrounded = isGrounded;
+            attributes.wasGrounded = isGrounded;
         }
 
         public void GetRotation(out float pitch, out float yaw)
