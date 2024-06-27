@@ -8,7 +8,7 @@ namespace MetroidPrimeDemo.Scripts.UI
     public class EnergyViewCtrl : MonoBehaviour
     {
         [SerializeField] private TMP_Text currentEnergyTankText;
-        [SerializeField] private Slider currentEnergyTankSlider;
+        [SerializeField] private Slider currentEnergyTankBar;
         [SerializeField] private Transform energyTankContainer;
         [SerializeField] private GameObject energyTankTemplate;
         [SerializeField] private PlayerCharacterCtrl player;
@@ -21,7 +21,7 @@ namespace MetroidPrimeDemo.Scripts.UI
 
             int currentEnergyTank = health % 100;
             currentEnergyTankText.text = currentEnergyTank.ToString("D2");
-            currentEnergyTankSlider.value = currentEnergyTank;
+            currentEnergyTankBar.value = currentEnergyTank;
 
             int energyTank = health / 100;
             int energyTankDiff = energyTank - (energyTankContainer.childCount - 1);

@@ -24,6 +24,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             return aimable != null;
         }
 
+        public string targetName = "(Target)";
         public EventHandler OnDisabled;
 
         protected virtual void OnEnable()
@@ -33,8 +34,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         protected virtual void OnDisable()
         {
-            EnabledAimableSet.Remove(this);
-            OnDisabled?.Invoke(this, null);
+            if (EnabledAimableSet.Remove(this))
+                OnDisabled?.Invoke(this, null);
         }
     }
 }

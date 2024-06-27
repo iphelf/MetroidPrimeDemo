@@ -60,6 +60,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             _ai = null;
             _isAttacking = false;
             explosionObject.SetActive(true);
+            OnDisable();
             yield return new WaitForSeconds(1.0f);
             Destroy(gameObject);
         }

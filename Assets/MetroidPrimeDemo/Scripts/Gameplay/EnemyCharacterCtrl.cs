@@ -6,11 +6,14 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     {
         public float maxHealth;
         private float _health;
+        public float HealthRatio => maxHealth == 0.0f ? 0.0f : _health / maxHealth;
         protected PlayerCharacterCtrl Player;
         private bool _destroying;
 
         protected virtual void Awake()
         {
+            _health = maxHealth;
+
             var go = GameObject.FindWithTag("Player");
             Player = go.GetComponent<PlayerCharacterCtrl>();
         }
