@@ -6,12 +6,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     [RequireComponent(typeof(ParticleSystem))]
     public class BeamParticleCtrl : MonoBehaviour
     {
-        public readonly UnityEvent<Aimable> OnDamage = new();
+        public readonly UnityEvent<GameObject> OnDamage = new();
 
         private void OnParticleCollision(GameObject other)
         {
-            if (Aimable.IsValid(other, out var aimable))
-                OnDamage.Invoke(aimable);
+            OnDamage.Invoke(other);
         }
     }
 }

@@ -26,12 +26,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         public EventHandler OnDisabled;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             EnabledAimableSet.Add(this);
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             EnabledAimableSet.Remove(this);
             OnDisabled?.Invoke(this, null);

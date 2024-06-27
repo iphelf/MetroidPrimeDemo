@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace MetroidPrimeDemo.Scripts.Gameplay
+namespace MetroidPrimeDemo.Scripts.Gameplay.Weapons
 {
     public class CannonCtrl : MonoBehaviour
     {

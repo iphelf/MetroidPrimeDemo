@@ -11,10 +11,10 @@ namespace MetroidPrimeDemo.Scripts.General
             distanceFromGround = float.NaN;
 
             var transform = character.transform;
-            var position = transform.position;
+            var position = transform.position + character.center;
             var up = transform.up;
-            var capsulePoint1 = position + character.radius * up;
-            var capsulePoint2 = position + (character.height - character.radius) * up;
+            var capsulePoint1 = position - (character.height / 2 - character.radius) * up;
+            var capsulePoint2 = position + (character.height / 2 - character.radius) * up;
             if (!Physics.CapsuleCast(
                     capsulePoint1, capsulePoint2, character.radius,
                     Vector3.down,

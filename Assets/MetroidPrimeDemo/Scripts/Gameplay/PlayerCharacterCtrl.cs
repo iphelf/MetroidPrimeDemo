@@ -1,10 +1,12 @@
 ﻿using MetroidPrimeDemo.Scripts.Data;
 using MetroidPrimeDemo.Scripts.Gameplay.Player;
+using MetroidPrimeDemo.Scripts.Gameplay.Weapons;
 using MetroidPrimeDemo.Scripts.General;
 using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay
 {
+    [SelectionBase]
     [RequireComponent(typeof(CharacterController))]
     public class PlayerCharacterCtrl : MonoBehaviour
     {
@@ -91,6 +93,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             _pitch = pitch;
             transform.localEulerAngles = new Vector3(0.0f, _yaw, 0.0f);
             camera.transform.localEulerAngles = new Vector3(_pitch, 0, 0);
+        }
+
+        public void Hurt(float damage)
+        {
+            attributes.health = Mathf.Clamp(attributes.health - damage, 0.0f, attributes.maxHealth);
         }
     }
 }

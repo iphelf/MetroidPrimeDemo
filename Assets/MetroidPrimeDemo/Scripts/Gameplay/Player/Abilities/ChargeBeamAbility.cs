@@ -39,13 +39,15 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             player.cannon.fullyChargedBeam.OnDamage.RemoveListener(OnFullChargeDamage);
         }
 
-        private void OnUnderChargeDamage(Aimable other) => OnDamage(other, underChargeDamage);
-        private void OnPartialChargeDamage(Aimable other) => OnDamage(other, partialChargeDamage);
-        private void OnFullChargeDamage(Aimable other) => OnDamage(other, fullChargeDamage);
+        private void OnUnderChargeDamage(GameObject other) => OnDamage(other, underChargeDamage);
+        private void OnPartialChargeDamage(GameObject other) => OnDamage(other, partialChargeDamage);
+        private void OnFullChargeDamage(GameObject other) => OnDamage(other, fullChargeDamage);
 
-        private void OnDamage(Aimable other, float damage)
+        private void OnDamage(GameObject other, float damage)
         {
-            if (other is EnemyCharacterCtrl enemy)
+            if (!Aimable.IsValid(other, out var aimable))
+                return;
+            if (aimable is EnemyCharacterCtrl enemy)
                 enemy.DealDamage(damage);
             else
                 Destroy(other.gameObject);
