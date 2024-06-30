@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay
 {
+    [SelectionBase]
     public class Aimable : MonoBehaviour
     {
         private static readonly HashSet<Aimable> EnabledAimableSet = new();
@@ -24,6 +25,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             return aimable != null;
         }
 
+        [SerializeField] private Transform aimPivot;
+        public Vector3 PivotPosition => (!aimPivot ? transform : aimPivot).position;
         public string targetName = "(Target)";
         public EventHandler OnDisabled;
 

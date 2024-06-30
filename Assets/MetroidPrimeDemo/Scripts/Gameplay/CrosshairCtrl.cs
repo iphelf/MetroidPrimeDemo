@@ -32,7 +32,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             if (locked)
             {
                 lockSeal.gameObject.SetActive(true);
-                UpdateLockedAim(player.attributes.lockTarget.transform.position);
+                UpdateLockedAim(player.attributes.lockTarget.PivotPosition);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
                 if (aimable)
                 {
                     targetLock.gameObject.SetActive(true);
-                    UpdateFreeAim(player.attributes.aimTarget.transform.position);
+                    UpdateFreeAim(player.attributes.aimTarget.PivotPosition);
                 }
                 else
                 {

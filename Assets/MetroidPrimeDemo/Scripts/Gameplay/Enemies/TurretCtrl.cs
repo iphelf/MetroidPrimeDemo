@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 {
-    [SelectionBase]
     [RequireComponent(typeof(EnemyVision))]
     public class TurretCtrl : EnemyCharacterCtrl
     {

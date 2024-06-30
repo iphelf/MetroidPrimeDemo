@@ -83,7 +83,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             foreach (var aimable in Aimable.All)
             {
                 {
-                    Vector3 direction = aimable.transform.position - player.camera.transform.position;
+                    Vector3 direction = aimable.PivotPosition - player.camera.transform.position;
                     float distance = direction.magnitude;
                     direction /= distance;
                     if (Vector3.Dot(player.camera.transform.forward, direction) < 0.0f)
@@ -95,7 +95,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
                     if (!isHit)
                         continue;
                     // Debug.DrawLine(player.camera.transform.position, hit.point, Color.blue, 0.5f);
-                    if (hit.transform != aimable.transform)
+                    if (hit.transform.GetComponentInParent<Aimable>() != aimable)
                         continue;
                 }
 
