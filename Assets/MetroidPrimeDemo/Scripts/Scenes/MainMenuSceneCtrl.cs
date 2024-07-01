@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace MetroidPrimeDemo.Scripts.Scenes
 {
-    public class MainMenuCtrl : MonoBehaviour
+    public class MainMenuSceneCtrl : MonoBehaviour
     {
         [Header("Title Panel")] [SerializeField]
         private CanvasGroup titlePanel;
