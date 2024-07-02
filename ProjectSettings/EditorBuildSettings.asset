@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/MetroidPrimeDemo/Scenes/MainMenu.unity
+    guid: 404e15fd44f14d74aa2f5ab465cbd202
+  - enabled: 1
+    path: Assets/MetroidPrimeDemo/Scenes/Level.unity
+    guid: 807426cc736843842b8aafc25ff5e260
+  - enabled: 1
+    path: Assets/MetroidPrimeDemo/Scenes/GameOver.unity
+    guid: 43f221618cf91704fb31a3a606d2f4c4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0

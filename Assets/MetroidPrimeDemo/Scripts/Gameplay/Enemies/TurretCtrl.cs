@@ -27,8 +27,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         private Awaitable _ai;
         private bool _isAttacking;
 
-        private async void Start()
+        protected override async void Start()
         {
+            base.Start();
+
             _vision = GetComponent<EnemyVision>();
             gun.beam.OnDamage.AddListener(OnDamage);
 
@@ -46,6 +48,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         {
             gun.beam.OnDamage.RemoveListener(OnDamage);
             _ai?.Cancel();
+            // TODO: 需要寻找妥善取消Awaitable的方法
         }
 
         protected override void OnDamaged()

@@ -1,7 +1,9 @@
-﻿using MetroidPrimeDemo.Scripts.Data;
+﻿using System;
+using MetroidPrimeDemo.Scripts.Data;
 using MetroidPrimeDemo.Scripts.Gameplay.Player;
 using MetroidPrimeDemo.Scripts.Gameplay.Weapons;
 using MetroidPrimeDemo.Scripts.General;
+using MetroidPrimeDemo.Scripts.Modules;
 using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay
@@ -46,6 +48,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+
+        private void OnDestroy()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         private void Update()
@@ -98,6 +106,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         public void Hurt(float damage)
         {
             attributes.health = Mathf.Clamp(attributes.health - damage, 0.0f, attributes.maxHealth);
+            if (attributes.health == 0.0f)
+                GameFlow.FinishGame(this);
         }
     }
 }

@@ -23,6 +23,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             ability.Initialize(inputConfig, abilityConfig);
         }
 
+        public bool ContainsAbility(AbilityType type) => _abilities.Contains(type);
+
         private Ability InstantiateAbility(AbilityType type)
         {
             Ability ability = type switch

@@ -10,12 +10,16 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         protected PlayerCharacterCtrl Player;
         private bool _destroying;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             _health = maxHealth;
 
-            var go = GameObject.FindWithTag("Player");
-            Player = go.GetComponent<PlayerCharacterCtrl>();
+            foreach (var go in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (!go) continue;
+                Player = go.GetComponent<PlayerCharacterCtrl>();
+                if (Player) break;
+            }
         }
 
         public void DealDamage(float damage)

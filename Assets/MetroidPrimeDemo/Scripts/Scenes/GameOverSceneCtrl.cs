@@ -19,7 +19,7 @@ namespace MetroidPrimeDemo.Scripts.Scenes
         private void Start()
         {
             var outcome = GameFlow.Outcome;
-            percentageCompleteText.text = $"{outcome.Completion:N0}%";
+            percentageCompleteText.text = $"{outcome.Completion * 100:N0}%";
             totalTimeText.text = $"{outcome.Time / 60:00}:{outcome.Time % 60.0f:00}";
             successPanel.SetActive(outcome.Success);
             failurePanel.SetActive(!outcome.Success);
