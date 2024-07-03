@@ -14,12 +14,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         {
             _health = maxHealth;
 
-            foreach (var go in GameObject.FindGameObjectsWithTag("Player"))
-            {
-                if (!go) continue;
-                Player = go.GetComponent<PlayerCharacterCtrl>();
-                if (Player) break;
-            }
+            Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterCtrl>();
         }
 
         public void DealDamage(float damage)

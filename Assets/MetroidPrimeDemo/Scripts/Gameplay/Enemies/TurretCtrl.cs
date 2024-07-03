@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
 using MetroidPrimeDemo.Scripts.Gameplay.EnemyAI;
 using MetroidPrimeDemo.Scripts.Gameplay.Weapons;
 using MetroidPrimeDemo.Scripts.General;
@@ -24,7 +25,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         [SerializeField] private GameObject explosionObject;
 
         private EnemyVision _vision;
-        private Awaitable _ai;
+        private readonly CancellationTokenSource _cancelAi = new();
         private bool _isAttacking;
 
         protected override async void Start()
@@ -36,8 +37,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
             try
             {
-                _ai = AIAsync();
-                await _ai;
+                await AIAsync(_cancelAi.Token);
             }
             catch (OperationCanceledException)
             {
@@ -47,8 +47,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         private void OnDestroy()
         {
             gun.beam.OnDamage.RemoveListener(OnDamage);
-            _ai?.Cancel();
-            // TODO: 需要寻找妥善取消Awaitable的方法
+            _cancelAi.Cancel();
         }
 
         protected override void OnDamaged()
@@ -58,8 +57,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private IEnumerator DestroyRoutine()
         {
-            _ai.Cancel();
-            _ai = null;
+            _cancelAi.Cancel();
             _isAttacking = false;
             explosionObject.SetActive(true);
             OnDisable();
@@ -77,24 +75,25 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             gun.transform.rotation = currentRotation;
         }
 
-        private async Awaitable AIAsync()
+        private async Awaitable AIAsync(CancellationToken cancellationToken)
         {
-            while (enabled)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                await WaitUntilPlayerShowsUpAsync();
-                await NotifyPlayerAttackingAsync();
+                await WaitUntilPlayerShowsUpAsync(cancellationToken);
+                await NotifyPlayerAttackingAsync(cancellationToken);
                 _isAttacking = true;
-                Awaitable attacking = AttackAsync();
-                await WaitUntilPlayerDisappearsAsync();
+                Awaitable attacking = AttackAsync(cancellationToken);
+                await WaitUntilPlayerDisappearsAsync(cancellationToken);
                 _isAttacking = false;
                 await attacking;
-                await NotifyPlayerAttackOverAsync();
+                await NotifyPlayerAttackOverAsync(cancellationToken);
             }
         }
 
-        private async Awaitable WaitUntilPlayerShowsUpAsync() => await WaitForPlayerAsync(float.MaxValue);
+        private async Awaitable WaitUntilPlayerShowsUpAsync(CancellationToken cancellationToken) =>
+            await WaitForPlayerAsync(float.MaxValue, cancellationToken);
 
-        private async Awaitable<bool> WaitForPlayerAsync(float maxDuration)
+        private async Awaitable<bool> WaitForPlayerAsync(float maxDuration, CancellationToken cancellationToken)
         {
             float startTime = Time.time;
             while (true)
@@ -102,33 +101,33 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
                 bool canSee = _vision.CanSee(Player.transform.position);
                 if (canSee)
                     return true;
-                await Awaitable.WaitForSecondsAsync(0.2f);
+                await Awaitable.WaitForSecondsAsync(0.2f, cancellationToken);
                 if (Time.time - startTime > maxDuration)
                     return false;
             }
         }
 
-        private async Awaitable NotifyPlayerAttackingAsync()
+        private async Awaitable NotifyPlayerAttackingAsync(CancellationToken cancellationToken)
         {
-            await Awaitable.WaitForSecondsAsync(1.0f);
+            await Awaitable.WaitForSecondsAsync(1.0f, cancellationToken);
         }
 
-        private async Awaitable NotifyPlayerAttackOverAsync()
+        private async Awaitable NotifyPlayerAttackOverAsync(CancellationToken cancellationToken)
         {
-            await Awaitable.WaitForSecondsAsync(1.0f);
+            await Awaitable.WaitForSecondsAsync(1.0f, cancellationToken);
         }
 
-        private async Awaitable AttackAsync()
+        private async Awaitable AttackAsync(CancellationToken cancellationToken)
         {
             while (_isAttacking)
             {
                 for (int i = 0; i < maxSuccession; ++i)
                 {
                     gun.Fire();
-                    await Awaitable.WaitForSecondsAsync(cooldown);
+                    await Awaitable.WaitForSecondsAsync(cooldown, cancellationToken);
                 }
 
-                await Awaitable.WaitForSecondsAsync(successionCooldown);
+                await Awaitable.WaitForSecondsAsync(successionCooldown, cancellationToken);
             }
         }
 
@@ -139,16 +138,16 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             player.Hurt(damage);
         }
 
-        private async Awaitable WaitUntilPlayerDisappearsAsync()
+        private async Awaitable WaitUntilPlayerDisappearsAsync(CancellationToken cancellationToken)
         {
             while (true)
             {
                 bool canSee = _vision.CanSee(Player.transform.position);
                 if (!canSee)
-                    canSee = await WaitForPlayerAsync(4.0f);
+                    canSee = await WaitForPlayerAsync(4.0f, cancellationToken);
                 if (!canSee)
                     break;
-                await Awaitable.WaitForSecondsAsync(0.2f);
+                await Awaitable.WaitForSecondsAsync(0.2f, cancellationToken);
             }
         }
     }
