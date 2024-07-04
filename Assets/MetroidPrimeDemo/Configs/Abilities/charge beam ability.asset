@@ -16,5 +16,11 @@ MonoBehaviour:
     type: 7
     displayName: Charge Beam
     description: Press and hold LMB/RT to charge, then release LMB/RT to fire.
-    config: []
+    config:
+    - key: underChargeDamage
+      value: 30
+    - key: partialChargeDamage
+      value: 35
+    - key: fullChargeDamage
+      value: 50
     dependencies: []

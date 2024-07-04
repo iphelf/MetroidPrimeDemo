@@ -18,15 +18,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
+            base.Initialize(inputConfig, abilityConfig);
             _input = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
             if (inputConfig.data.TryReadConfig(nameof(smoothTime), out var smoothTimeString))
                 float.TryParse(smoothTimeString, out smoothTime);
-            if (abilityConfig.data.TryReadConfig(nameof(maxSpeedOnGround), out var maxSpeedOnGroundString))
-                float.TryParse(maxSpeedOnGroundString, out maxSpeedOnGround);
-            if (abilityConfig.data.TryReadConfig(nameof(maxSpeedInAir), out var maxSpeedInAirString))
-                float.TryParse(maxSpeedInAirString, out maxSpeedInAir);
-            if (abilityConfig.data.TryReadConfig(nameof(accelerationInAir), out var accelerationInAirString))
-                float.TryParse(accelerationInAirString, out accelerationInAir);
         }
 
         private Vector2 Movement()

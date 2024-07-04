@@ -1,4 +1,5 @@
 ﻿using MetroidPrimeDemo.Scripts.Data;
+using MetroidPrimeDemo.Scripts.General;
 using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Player
@@ -9,6 +10,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player
 
         [HideInInspector] public PlayerCharacterCtrl player;
 
-        public abstract void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig);
+        public virtual void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
+        {
+            ConfigHelpers.ApplySerializableConfigs(abilityConfig.data.config, this);
+            ConfigHelpers.ApplySerializableConfigs(abilityConfig.data.dependencies, this);
+        }
     }
 }

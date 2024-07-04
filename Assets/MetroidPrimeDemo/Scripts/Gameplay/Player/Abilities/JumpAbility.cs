@@ -12,9 +12,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
+            base.Initialize(inputConfig, abilityConfig);
             _input = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
-            if (abilityConfig.data.TryReadConfig(nameof(speed), out var speedString))
-                float.TryParse(speedString, out speed);
         }
 
         private bool Jumped() => _input.WasPressedThisFrame();

@@ -18,13 +18,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
+            base.Initialize(inputConfig, abilityConfig);
             _stickInput = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
             if (inputConfig.data.TryReadConfig("pointerAction", out var pointerActionString))
                 _pointerInput = inputConfig.data.ActionsAsset.FindAction(pointerActionString);
-            if (abilityConfig.data.TryReadConfig(nameof(gamepadRotationSpeed), out var gamepadRotationSpeedString))
-                float.TryParse(gamepadRotationSpeedString, out gamepadRotationSpeed);
-            if (abilityConfig.data.TryReadConfig(nameof(mouseSensitivity), out var mouseSensitivityString))
-                float.TryParse(mouseSensitivityString, out mouseSensitivity);
         }
 
         private Vector2 LookDelta()
