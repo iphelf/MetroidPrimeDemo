@@ -67,13 +67,13 @@ namespace MetroidPrimeDemo.Scripts.UI
             string title, List<MenuEntry> entries, bool fadeOut = true, bool fadeIn = true)
         {
             if (fadeOut)
-                await canvasGroup.DOFade(0.0f, 0.15f).AsyncWaitForCompletion();
+                await canvasGroup.DOFade(0.0f, 0.15f).SetUpdate(true).AsyncWaitForCompletion();
 
             ClearEntries();
             SetEntries(title, entries);
 
             if (fadeIn)
-                await canvasGroup.DOFade(1.0f, 0.15f).AsyncWaitForCompletion();
+                await canvasGroup.DOFade(1.0f, 0.15f).SetUpdate(true).AsyncWaitForCompletion();
         }
     }
 }

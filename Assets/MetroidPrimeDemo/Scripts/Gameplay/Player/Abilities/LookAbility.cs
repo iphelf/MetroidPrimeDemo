@@ -32,7 +32,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
             var look = _stickInput.ReadValue<Vector2>();
             // Check if this look input is coming from the mouse
             if (look.Equals(Vector2.zero))
-                look = _pointerInput.ReadValue<Vector2>() * mouseSensitivity;
+                look = Time.timeScale * mouseSensitivity * _pointerInput.ReadValue<Vector2>();
             // or from the gamepad
             else
                 look *= Time.deltaTime * gamepadRotationSpeed;

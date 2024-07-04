@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "11509001-db26-4d32-a4e8-5cc0a51a9e45",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -280,39 +289,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Button With One Modifier",
-                    "id": "eb9d3f8c-9d4e-479c-9cd9-5303557b1d98",
-                    "path": "ButtonWithOneModifier(overrideModifiersNeedToBePressedFirst=true)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "FireMissile",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Modifier",
-                    "id": "bd454270-b495-400a-8240-e9116ad4d22b",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "FireMissile",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Button",
-                    "id": "2f3659dd-e08e-4415-9e08-3d0105ee8f73",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "FireMissile",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "51a5d506-78cd-4f30-8fa7-6b821ebfaf03",
                     "path": "<Gamepad>/leftTrigger",
@@ -331,6 +307,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ccb7e210-97ea-4ed9-8c75-074ad546cde1",
+                    "path": "*/{Menu}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc75bc56-551b-4cb5-b94a-c3e366d067be",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "231c0d35-e1e2-4f41-aca2-6ce3105bca45",
+                    "path": "<Keyboard>/pause",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06b72ab4-6ae2-4ab1-9256-8b79c66ae3ef",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

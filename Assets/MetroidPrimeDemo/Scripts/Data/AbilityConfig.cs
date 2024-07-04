@@ -23,6 +23,8 @@ namespace MetroidPrimeDemo.Scripts.Data
     public class AbilityConfigData
     {
         public AbilityType type = AbilityType.None;
+        public string displayName = string.Empty;
+        [TextArea] public string description = string.Empty;
         public List<ConfigEntry> config = new();
         public List<ConfigEntry<GameObject>> dependencies = new();
 

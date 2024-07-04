@@ -9,7 +9,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     public class AbilitySystem : MonoBehaviour
     {
         private PlayerCharacterCtrl _player;
-        private readonly HashSet<AbilityType> _abilities = new();
+        private readonly SortedDictionary<AbilityType, AbilityConfig> _abilities = new();
 
         public void Initialize(PlayerCharacterCtrl player)
         {
@@ -18,12 +18,14 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
 
         public void GrantAbility(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
-            if (!_abilities.Add(abilityConfig.data.type)) return;
+            if (!_abilities.TryAdd(abilityConfig.data.type, abilityConfig)) return;
             Ability ability = InstantiateAbility(abilityConfig.data.type);
             ability.Initialize(inputConfig, abilityConfig);
         }
 
-        public bool ContainsAbility(AbilityType type) => _abilities.Contains(type);
+        public bool ContainsAbility(AbilityType type) => _abilities.ContainsKey(type);
+
+        public IEnumerable<AbilityConfig> Abilities => _abilities.Values;
 
         private Ability InstantiateAbility(AbilityType type)
         {

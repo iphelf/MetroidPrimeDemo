@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     type: 4
+    displayName: Arm Cannon
+    description: Press and hold LMB/RT to fire a series of beams.
     config:
     - key: damage
       value: 10

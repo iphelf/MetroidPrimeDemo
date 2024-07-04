@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     type: 3
+    displayName: Steerability
+    description: Move the mouse or rotate the right stick to turn around.
     config: []
+    dependencies: []

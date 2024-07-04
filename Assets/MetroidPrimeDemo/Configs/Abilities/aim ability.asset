@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     type: 5
+    displayName: Combat Visor
+    description: Press and hold RMB/LT to lock on a marked target.
     config: []
+    dependencies: []

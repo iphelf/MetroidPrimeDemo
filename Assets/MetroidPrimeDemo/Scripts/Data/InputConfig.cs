@@ -45,5 +45,11 @@ namespace MetroidPrimeDemo.Scripts.Data
     public class InputConfig : ScriptableObject
     {
         public InputConfigData data;
+        [HideInInspector] public InputAction action;
+
+        private void OnEnable()
+        {
+            action = data.FindAction();
+        }
     }
 }

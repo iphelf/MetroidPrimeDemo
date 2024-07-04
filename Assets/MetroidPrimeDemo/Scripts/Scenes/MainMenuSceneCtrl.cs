@@ -20,6 +20,9 @@ namespace MetroidPrimeDemo.Scripts.Scenes
         private InputAction _startInput;
         private CanvasGroup _currentPanel;
 
+        private readonly string _mainMenuTitle = "Main Menu";
+        private readonly string _optionsMenuTitle = "Options";
+
         private class BgmVolumeBinding : Binding<float>
         {
             public override float Get() => AudioMgr.BgmVolume;
@@ -38,7 +41,7 @@ namespace MetroidPrimeDemo.Scripts.Scenes
 
             FadeIn(titlePanel);
 
-            var optionsButtonInMainMenu = new MenuButtonEntry { EntryName = "Options", Callback = null };
+            var optionsButtonInMainMenu = new MenuButtonEntry { EntryName = _optionsMenuTitle, Callback = null };
             var mainMenuEntries = new List<MenuEntry>
             {
                 new MenuButtonEntry { EntryName = "New Game", Callback = GameFlow.NewGame },
@@ -61,11 +64,11 @@ namespace MetroidPrimeDemo.Scripts.Scenes
                     Binding = new SfxVolumeBinding(),
                 },
                 new MenuButtonEntry
-                    { EntryName = "Back", Callback = () => menu.FillEntries("Main Menu", mainMenuEntries) },
+                    { EntryName = "Back", Callback = () => menu.FillEntries(_mainMenuTitle, mainMenuEntries) },
             };
-            optionsButtonInMainMenu.Callback = () => menu.FillEntries("Options", optionsMenuEntries);
+            optionsButtonInMainMenu.Callback = () => menu.FillEntries(_optionsMenuTitle, optionsMenuEntries);
 
-            menu.FillEntries("Main Menu", mainMenuEntries, fadeOut: false, fadeIn: false);
+            menu.FillEntries(_mainMenuTitle, mainMenuEntries, fadeOut: false, fadeIn: false);
             menuPanel.gameObject.SetActive(false);
         }
 

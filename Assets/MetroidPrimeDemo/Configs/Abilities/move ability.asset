@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     type: 2
+    displayName: Mobility
+    description: Hold the W/A/S/D keys or rotate the left stick to move around.
     config: []
+    dependencies: []

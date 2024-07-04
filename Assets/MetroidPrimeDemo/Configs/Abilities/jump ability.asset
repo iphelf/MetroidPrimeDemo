@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     type: 1
+    displayName: Jet Boot
+    description: Press Space/LB/A to jump.
     config: []
+    dependencies: []
