@@ -25,6 +25,12 @@ namespace MetroidPrimeDemo.Scripts.UI
             _entryCtrls.Clear();
         }
 
+        public void FocusFirstEntry()
+        {
+            if (_entryCtrls.Count > 0)
+                _entryCtrls[0].Focus();
+        }
+
         private void SetEntries(string title, List<MenuEntry> entries)
         {
             titleText.text = title;
@@ -51,21 +57,23 @@ namespace MetroidPrimeDemo.Scripts.UI
                 curr.LinkNavigation(prev, next);
             }
 
-            if (_entryCtrls.Count > 0)
-                _entryCtrls[0].Focus();
+            FocusFirstEntry();
         }
 
-        public void FillEntries(string title, List<MenuEntry> entries) =>
-            StartCoroutine(FillEntriesRoutine(title, entries));
+        public void FillEntries(string title, List<MenuEntry> entries, bool fadeOut = true, bool fadeIn = true) =>
+            StartCoroutine(FillEntriesRoutine(title, entries, fadeOut, fadeIn));
 
-        private async Awaitable FillEntriesRoutine(string title, List<MenuEntry> entries)
+        private async Awaitable FillEntriesRoutine(
+            string title, List<MenuEntry> entries, bool fadeOut = true, bool fadeIn = true)
         {
-            await canvasGroup.DOFade(0.0f, 0.15f).AsyncWaitForCompletion();
+            if (fadeOut)
+                await canvasGroup.DOFade(0.0f, 0.15f).AsyncWaitForCompletion();
 
             ClearEntries();
             SetEntries(title, entries);
 
-            await canvasGroup.DOFade(1.0f, 0.15f).AsyncWaitForCompletion();
+            if (fadeIn)
+                await canvasGroup.DOFade(1.0f, 0.15f).AsyncWaitForCompletion();
         }
     }
 }

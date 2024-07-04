@@ -2,12 +2,7 @@
 {
     public static class AudioMgr
     {
-        public static void SetSfxVolume(float volume)
-        {
-        }
-
-        public static void SetBgmVolume(float volume)
-        {
-        }
+        public static float SfxVolume { get; set; } = 100.0f;
+        public static float BgmVolume { get; set; } = 100.0f;
     }
 }

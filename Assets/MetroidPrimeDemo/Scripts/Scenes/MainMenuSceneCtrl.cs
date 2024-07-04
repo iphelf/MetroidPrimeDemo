@@ -1,58 +1,82 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
+using MetroidPrimeDemo.Scripts.Data;
 using MetroidPrimeDemo.Scripts.Modules;
+using MetroidPrimeDemo.Scripts.UI;
+using MetroidPrimeDemo.Scripts.UI.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace MetroidPrimeDemo.Scripts.Scenes
 {
     public class MainMenuSceneCtrl : MonoBehaviour
     {
-        [Header("Title Panel")] [SerializeField]
-        private CanvasGroup titlePanel;
+        [SerializeField] private CanvasGroup titlePanel;
+        [SerializeField] private InputConfig startInputConfig;
+        [SerializeField] private CanvasGroup menuPanel;
+        [SerializeField] private MenuViewCtrl menu;
 
-        private InputAction startInput;
-
-        [Header("Main Menu Panel")] [SerializeField]
-        private CanvasGroup mainMenuPanel;
-
-        [SerializeField] private Button newGameButton;
-        [SerializeField] private Button optionsButton;
-        [SerializeField] private Button quitButton;
-        [SerializeField] private Button backFromMainMenuButton;
-
-        [Header("Options Panel")] [SerializeField]
-        private CanvasGroup optionsPanel;
-
-        [SerializeField] private Slider sfxVolumeSlider;
-        [SerializeField] private Slider bgmVolumeSlider;
-        [SerializeField] private Button backFromOptionsButton;
-
+        private InputAction _startInput;
         private CanvasGroup _currentPanel;
+
+        private class BgmVolumeBinding : Binding<float>
+        {
+            public override float Get() => AudioMgr.BgmVolume;
+            public override void Set(float value) => AudioMgr.BgmVolume = value;
+        }
+
+        private class SfxVolumeBinding : Binding<float>
+        {
+            public override float Get() => AudioMgr.SfxVolume;
+            public override void Set(float value) => AudioMgr.SfxVolume = value;
+        }
 
         private void Start()
         {
-            startInput = InputSystem.actions.FindAction("Player/FireBeam");
+            _startInput = startInputConfig.data.FindAction();
+
             FadeIn(titlePanel);
 
-            mainMenuPanel.gameObject.SetActive(false);
-            newGameButton.onClick.AddListener(GameFlow.NewGame);
-            optionsButton.onClick.AddListener(() => CrossFade(mainMenuPanel, optionsPanel));
-            quitButton.onClick.AddListener(Application.Quit);
-            backFromMainMenuButton.onClick.AddListener(() => CrossFade(mainMenuPanel, titlePanel));
+            var optionsButtonInMainMenu = new MenuButtonEntry { EntryName = "Options", Callback = null };
+            var mainMenuEntries = new List<MenuEntry>
+            {
+                new MenuButtonEntry { EntryName = "New Game", Callback = GameFlow.NewGame },
+                optionsButtonInMainMenu,
+                new MenuButtonEntry { EntryName = "Quit", Callback = GameFlow.QuitGame },
+                new MenuButtonEntry { EntryName = "Back", Callback = () => CrossFade(menuPanel, titlePanel) },
+            };
+            var optionsMenuEntries = new List<MenuEntry>
+            {
+                new MenuSliderEntry
+                {
+                    EntryName = "BGM Volume",
+                    MinimumValue = 0.0f, MaximumValue = 100.0f,
+                    Binding = new BgmVolumeBinding(),
+                },
+                new MenuSliderEntry
+                {
+                    EntryName = "SFX Volume",
+                    MinimumValue = 0.0f, MaximumValue = 100.0f,
+                    Binding = new SfxVolumeBinding(),
+                },
+                new MenuButtonEntry
+                    { EntryName = "Back", Callback = () => menu.FillEntries("Main Menu", mainMenuEntries) },
+            };
+            optionsButtonInMainMenu.Callback = () => menu.FillEntries("Options", optionsMenuEntries);
 
-            optionsPanel.gameObject.SetActive(false);
-            sfxVolumeSlider.onValueChanged.AddListener(AudioMgr.SetSfxVolume);
-            bgmVolumeSlider.onValueChanged.AddListener(AudioMgr.SetBgmVolume);
-            backFromOptionsButton.onClick.AddListener(() => CrossFade(optionsPanel, mainMenuPanel));
+            menu.FillEntries("Main Menu", mainMenuEntries, fadeOut: false, fadeIn: false);
+            menuPanel.gameObject.SetActive(false);
         }
 
         private void Update()
         {
             if (_currentPanel == titlePanel)
-                if (startInput.WasPressedThisFrame())
-                    CrossFade(titlePanel, mainMenuPanel);
+                if (_startInput.WasPressedThisFrame())
+                {
+                    menu.FocusFirstEntry();
+                    CrossFade(titlePanel, menuPanel);
+                }
         }
 
         private void FadeIn(CanvasGroup canvasGroup)

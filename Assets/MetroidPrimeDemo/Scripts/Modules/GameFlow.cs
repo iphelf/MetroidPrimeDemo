@@ -15,6 +15,11 @@ namespace MetroidPrimeDemo.Scripts.Modules
             SceneManager.LoadScene("Level");
         }
 
+        public static void QuitGame()
+        {
+            Application.Quit();
+        }
+
         public record GameOutcome(bool Success, float Completion, float Time);
 
         public static GameOutcome Outcome { get; private set; }
