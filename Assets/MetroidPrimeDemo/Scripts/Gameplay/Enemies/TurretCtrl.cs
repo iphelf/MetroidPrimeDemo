@@ -48,6 +48,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         {
             gun.beam.OnDamage.RemoveListener(OnDamage);
             _cancelAi.Cancel();
+            _cancelAi.Dispose();
         }
 
         protected override void OnDamaged()

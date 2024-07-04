@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MetroidPrimeDemo.Scripts.General;
 using UnityEngine;
 
@@ -85,9 +86,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
                 transform.position, explosionRadius, hitColliders,
                 Aimable.LayerMask
             );
+            HashSet<Aimable> damaged = new();
             for (int i = 0; i < hitCount; ++i)
-                if (Aimable.IsValid(hitColliders[i].gameObject, out var aimable))
+                if (Aimable.IsValid(hitColliders[i].attachedRigidbody.gameObject, out var aimable)
+                    && damaged.Add(aimable))
                     _onDamage(aimable);
+
             await Awaitable.WaitForSecondsAsync(1.0f);
 
             Destroy(gameObject);

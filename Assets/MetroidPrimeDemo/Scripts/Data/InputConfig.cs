@@ -38,7 +38,7 @@ namespace MetroidPrimeDemo.Scripts.Data
             }
         }
 
-        public InputAction FindAction() => ActionsAsset.FindAction(action);
+        public InputAction FindAction() => ActionsAsset?.FindAction(action);
     }
 
     [CreateAssetMenu(menuName = "Scriptable Object/Input Config", fileName = "input")]

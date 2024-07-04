@@ -1,5 +1,4 @@
-﻿using System;
-using MetroidPrimeDemo.Scripts.Data;
+﻿using MetroidPrimeDemo.Scripts.Data;
 using MetroidPrimeDemo.Scripts.Gameplay.Player;
 using MetroidPrimeDemo.Scripts.Gameplay.Weapons;
 using MetroidPrimeDemo.Scripts.General;

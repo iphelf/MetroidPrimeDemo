@@ -7,7 +7,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
     {
         [SerializeField] private float damage;
 
-        protected void InitializeDamage(AbilityConfig abilityConfig)
+        public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
             if (abilityConfig.data.TryReadConfig(nameof(damage), out var damageString))
                 float.TryParse(damageString, out damage);

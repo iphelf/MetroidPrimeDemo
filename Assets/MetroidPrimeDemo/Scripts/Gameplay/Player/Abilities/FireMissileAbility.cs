@@ -15,8 +15,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
         public override void Initialize(InputConfig inputConfig, AbilityConfig abilityConfig)
         {
+            base.Initialize(inputConfig, abilityConfig);
             _input = inputConfig.data.ActionsAsset.FindAction(inputConfig.data.action);
-            InitializeDamage(abilityConfig);
             if (!abilityConfig.data.TryReadDependency(nameof(missilePrefab), out missilePrefab))
                 missilePrefab = null;
         }

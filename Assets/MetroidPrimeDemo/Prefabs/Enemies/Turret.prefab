@@ -278,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1953811440305526983}
   - component: {fileID: 4889920938213709378}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RodCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5213597153827340711}
   - component: {fileID: 4062801227261969102}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10438,7 +10438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609188031287911691}
   - component: {fileID: 4130159949795189247}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ScreenCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
