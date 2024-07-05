@@ -8,15 +8,6 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
     public class Aimable : MonoBehaviour
     {
         private static readonly HashSet<Aimable> EnabledAimableSet = new();
-        private static int _layer = -1;
-        private static int _layerMask = -1;
-
-        public static int Layer
-            => _layer == -1 ? _layer = UnityEngine.LayerMask.NameToLayer("Aimable") : _layer;
-
-        public static int LayerMask
-            => _layerMask == -1 ? _layerMask = UnityEngine.LayerMask.GetMask("Aimable") : _layerMask;
-
         public static IEnumerable<Aimable> All => EnabledAimableSet;
 
         public static bool IsValid(GameObject go, out Aimable aimable)
@@ -24,6 +15,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             aimable = go.GetComponent<Aimable>();
             return aimable != null;
         }
+
+        public static bool IsValid(Collider collider, out Aimable aimable)
+            => IsValid(collider.attachedRigidbody.gameObject, out aimable);
 
         [SerializeField] private Transform aimPivot;
         public Vector3 PivotPosition => (!aimPivot ? transform : aimPivot).position;

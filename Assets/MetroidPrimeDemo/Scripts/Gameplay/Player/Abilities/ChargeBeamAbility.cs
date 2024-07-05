@@ -117,7 +117,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
                 foreach (var go in GameObject.FindGameObjectsWithTag("FloatingPickup"))
                 {
                     var pickup = go.GetComponent<FloatingPickup>();
-                    pickup.MoveTowards(player.Center);
+                    pickup.MoveTowards(player.transform.position);
                 }
             }
         }

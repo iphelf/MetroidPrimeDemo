@@ -13,6 +13,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         [SerializeField] private GameObject missileObject;
         [SerializeField] private GameObject explosionObject;
         [SerializeField] private TriggerListener triggerListener;
+        [SerializeField] private LayerMask hitLayers;
         private bool _flying;
         private Aimable _target;
         private float _lifetime;
@@ -84,11 +85,11 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             Collider[] hitColliders = new Collider[10];
             int hitCount = Physics.OverlapSphereNonAlloc(
                 transform.position, explosionRadius, hitColliders,
-                Aimable.LayerMask
+                hitLayers.value
             );
             HashSet<Aimable> damaged = new();
             for (int i = 0; i < hitCount; ++i)
-                if (Aimable.IsValid(hitColliders[i].attachedRigidbody.gameObject, out var aimable)
+                if (Aimable.IsValid(hitColliders[i], out var aimable)
                     && damaged.Add(aimable))
                     _onDamage(aimable);
 

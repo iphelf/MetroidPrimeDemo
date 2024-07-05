@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 738443700785734768}
   - component: {fileID: 8489822131235800441}
   - component: {fileID: 2527873854782503190}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnergyPickup
-  m_TagString: Untagged
+  m_TagString: FloatingPickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

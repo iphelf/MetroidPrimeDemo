@@ -14,9 +14,9 @@ TagManager:
   - Water
   - UI
   - 
-  - Aimable
-  - Player
-  - 
+  - Actor
+  - Projectile
+  - Trigger
   - 
   - 
   - 

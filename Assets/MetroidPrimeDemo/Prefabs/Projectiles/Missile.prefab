@@ -289,3 +289,6 @@ MonoBehaviour:
   missileObject: {fileID: 772737398186483578}
   explosionObject: {fileID: 52499080995312251}
   triggerListener: {fileID: 4261690241524828239}
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 128

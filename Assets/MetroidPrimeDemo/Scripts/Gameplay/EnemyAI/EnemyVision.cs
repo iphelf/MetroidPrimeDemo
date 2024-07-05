@@ -7,7 +7,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
         [SerializeField] private Transform eye;
         [SerializeField] private float coneAngle = 48.0f;
         [SerializeField] private float maxDistance = 15.0f;
-        [SerializeField] private LayerMask obstructionLayers;
+        [SerializeField] private LayerMask obstructionLayers = 0;
 
         public Transform Eye => eye;
         public float ConeAngle => coneAngle;

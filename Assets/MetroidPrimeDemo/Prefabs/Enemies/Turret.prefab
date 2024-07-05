@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 6537856183203847555}
   - component: {fileID: 7011255463381809688}
   - component: {fileID: 6906093293783288318}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ MonoBehaviour:
   maxDistance: 15
   obstructionLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
 --- !u!54 &6906093293783288318
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10493,7 +10493,7 @@ GameObject:
   - component: {fileID: 2991179961960168000}
   - component: {fileID: 4769270315549426917}
   - component: {fileID: 7740606269768924083}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: RegularBeamParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
