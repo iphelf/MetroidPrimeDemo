@@ -1604,6 +1604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 4036997514125147590}
   slider: {fileID: 230890359827603387}
+  minText: {fileID: 6745016275661521348}
+  maxText: {fileID: 1813316399218914394}
   entryButton: {fileID: 574549229160261318}
 --- !u!114 &8284977653205468419
 MonoBehaviour:

@@ -23,18 +23,6 @@ namespace MetroidPrimeDemo.Scripts.Scenes
         private readonly string _mainMenuTitle = "Main Menu";
         private readonly string _optionsMenuTitle = "Options";
 
-        private class BgmVolumeBinding : Binding<float>
-        {
-            public override float Get() => AudioMgr.BgmVolume;
-            public override void Set(float value) => AudioMgr.BgmVolume = value;
-        }
-
-        private class SfxVolumeBinding : Binding<float>
-        {
-            public override float Get() => AudioMgr.SfxVolume;
-            public override void Set(float value) => AudioMgr.SfxVolume = value;
-        }
-
         private void Start()
         {
             _startInput = startInputConfig.data.FindAction();
@@ -62,6 +50,12 @@ namespace MetroidPrimeDemo.Scripts.Scenes
                     EntryName = "SFX Volume",
                     MinimumValue = 0.0f, MaximumValue = 100.0f,
                     Binding = new SfxVolumeBinding(),
+                },
+                new MenuSliderEntry
+                {
+                    EntryName = "Target Frame Rate",
+                    MinimumValue = 24.0f, MaximumValue = 144.0f,
+                    Binding = new TargetFrameRateBinding(),
                 },
                 new MenuButtonEntry
                     { EntryName = "Back", Callback = () => menu.FillEntries(_mainMenuTitle, mainMenuEntries) },

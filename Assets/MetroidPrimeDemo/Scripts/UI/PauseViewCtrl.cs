@@ -23,19 +23,6 @@ namespace MetroidPrimeDemo.Scripts.UI
         private List<MenuEntry> _optionsMenuEntries;
         private readonly string _abilitiesMenuTitle = "Abilities";
 
-        private class BgmVolumeBinding : Binding<float>
-        {
-            public override float Get() => AudioMgr.BgmVolume;
-            public override void Set(float value) => AudioMgr.BgmVolume = value;
-        }
-
-        private class SfxVolumeBinding : Binding<float>
-        {
-            public override float Get() => AudioMgr.SfxVolume;
-            public override void Set(float value) => AudioMgr.SfxVolume = value;
-        }
-
-
         private void Start()
         {
             _pauseMenuEntries = new List<MenuEntry>
@@ -79,6 +66,12 @@ namespace MetroidPrimeDemo.Scripts.UI
                     EntryName = "SFX Volume",
                     MinimumValue = 0.0f, MaximumValue = 100.0f,
                     Binding = new SfxVolumeBinding(),
+                },
+                new MenuSliderEntry
+                {
+                    EntryName = "Target Frame Rate",
+                    MinimumValue = 24.0f, MaximumValue = 144.0f,
+                    Binding = new TargetFrameRateBinding(),
                 },
                 new MenuButtonEntry
                     { EntryName = "Back", Callback = () => menu.FillEntries(_pauseMenuTitle, _pauseMenuEntries) },

@@ -6610,41 +6610,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
-    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 742.1234
-      objectReference: {fileID: 0}
-    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 67.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -67.04
-      objectReference: {fileID: 0}
     - target: {fileID: 7050092878659783064, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
       propertyPath: m_text
       value: Pause Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303906229459964586, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303906229459964586, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303906229459964586, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -95.04
       objectReference: {fileID: 0}
     - target: {fileID: 7375219272891576308, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
       propertyPath: m_Pivot.x

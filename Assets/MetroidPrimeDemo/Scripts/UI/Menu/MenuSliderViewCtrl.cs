@@ -8,6 +8,8 @@ namespace MetroidPrimeDemo.Scripts.UI.Menu
     {
         [SerializeField] private TMP_Text text;
         [SerializeField] private Slider slider;
+        [SerializeField] private TMP_Text minText;
+        [SerializeField] private TMP_Text maxText;
         [SerializeField] private Button entryButton;
         private Binding<float> _binding;
 
@@ -49,6 +51,8 @@ namespace MetroidPrimeDemo.Scripts.UI.Menu
             text.text = sliderEntry.EntryName;
             slider.minValue = sliderEntry.MinimumValue;
             slider.maxValue = sliderEntry.MaximumValue;
+            minText.text = sliderEntry.MinimumValue.ToString("N0");
+            maxText.text = sliderEntry.MaximumValue.ToString("N0");
             ClearBinding();
             SetBinding(sliderEntry.Binding);
         }

@@ -18,6 +18,8 @@ namespace MetroidPrimeDemo.Scripts.Modules
             }
 
             DontDestroyOnLoad(gameObject);
+
+            Initialize();
         }
 
         private void Initialize()
