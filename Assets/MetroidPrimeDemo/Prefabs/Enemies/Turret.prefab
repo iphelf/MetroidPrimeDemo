@@ -387,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3071867298578743260}
-  - component: {fileID: 6537856183203847555}
+  - component: {fileID: 3959755701915242669}
   - component: {fileID: 7011255463381809688}
   - component: {fileID: 6906093293783288318}
   m_Layer: 7
@@ -414,7 +414,7 @@ Transform:
   - {fileID: 9070534837277314919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6537856183203847555
+--- !u!114 &3959755701915242669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -423,12 +423,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3122454755713153769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfe8edc57fbe4a49b74f6601cfe17859, type: 3}
+  m_Script: {fileID: 11500000, guid: c29ed47162fc4aaab136a9407a8cca57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aimPivot: {fileID: 4365974186971567573}
   targetName: Auto Defense Turret
   maxHealth: 80
+  explosionObject: {fileID: 1003504417366996627}
   gun: {fileID: 4400550950066132507}
   damage: 25
   cooldown: 0.18
@@ -436,7 +437,6 @@ MonoBehaviour:
   successionCooldown: 0.5
   pitchRange: {x: -25, y: 25}
   rotationSpeed: 25
-  explosionObject: {fileID: 1003504417366996627}
 --- !u!114 &7011255463381809688
 MonoBehaviour:
   m_ObjectHideFlags: 0

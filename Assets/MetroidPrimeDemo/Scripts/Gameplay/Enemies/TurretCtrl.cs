@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Threading;
+﻿using System.Collections;
 using MetroidPrimeDemo.Scripts.Gameplay.EnemyAI;
 using MetroidPrimeDemo.Scripts.Gameplay.Weapons;
 using MetroidPrimeDemo.Scripts.General;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityHFSM;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 {
     [RequireComponent(typeof(EnemyVision))]
     public class TurretCtrl : EnemyCharacterCtrl
     {
+        [SerializeField] private GameObject explosionObject;
         [SerializeField] private TurretGunCtrl gun;
-        [SerializeField] private float damage = 20.0f;
+        [SerializeField] private float damage = 25.0f;
         [SerializeField] private float cooldown = 0.18f;
         [SerializeField] private int maxSuccession = 2;
         [SerializeField] private float successionCooldown = 0.8f;
@@ -22,114 +22,94 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         private Vector2 pitchRange = new(-89.0f, 25.0f);
 
         [SerializeField] private float rotationSpeed = 25.0f;
-        [SerializeField] private GameObject explosionObject;
 
         private EnemyVision _vision;
-        private readonly CancellationTokenSource _cancelAi = new();
-        private bool _isAttacking;
 
-        protected override async void Start()
+        private StateMachine _fsm;
+
+        private static class States
+        {
+            public const string Idle = nameof(Idle);
+            public const string PowerOn = nameof(PowerOn);
+            public const string Attack = nameof(Attack);
+            public const string PowerOff = nameof(PowerOff);
+            public const string Dying = nameof(Dying);
+        }
+
+        private static class Triggers
+        {
+            public const string PoweredOn = nameof(PoweredOn);
+            public const string PoweredOff = nameof(PoweredOff);
+            public const string Damaged = nameof(Damaged);
+        }
+
+
+        protected override void Start()
         {
             base.Start();
 
             _vision = GetComponent<EnemyVision>();
+            _vision.SetTarget(Player.transform);
+
             gun.beam.OnDamage.AddListener(OnDamage);
 
-            try
-            {
-                await AIAsync(_cancelAi.Token);
-            }
-            catch (OperationCanceledException)
-            {
-            }
+            _fsm = new StateMachine();
+
+            _fsm.AddState(States.Idle);
+            _fsm.AddState(States.PowerOn, new CoState(this, PowerOnRoutine));
+            _fsm.AddState(States.Attack, new CoState(this, AttackRoutine));
+            _fsm.AddState(States.PowerOff, new CoState(this, PowerOffRoutine));
+            _fsm.AddState(States.Dying, new CoState(this, DieRoutine));
+            _fsm.SetStartState(States.Idle);
+
+            _fsm.AddTransition(States.Idle, States.PowerOn, _ => _vision.CanSee());
+            _fsm.AddTriggerTransition(Triggers.PoweredOn, States.PowerOn, States.Attack);
+            _fsm.AddTransition(States.Attack, States.PowerOff, _ => _vision.LastTimeSeen + 4.0f < Time.time);
+            _fsm.AddTriggerTransition(Triggers.PoweredOff, States.PowerOff, States.Idle);
+            _fsm.AddTriggerTransitionFromAny(Triggers.Damaged, States.Dying);
+
+            _fsm.Init();
         }
 
-        private void OnDestroy()
+        private void Update()
         {
-            gun.beam.OnDamage.RemoveListener(OnDamage);
-            _cancelAi.Cancel();
-            _cancelAi.Dispose();
-        }
-
-        protected override void OnDamaged()
-        {
-            StartCoroutine(DestroyRoutine());
-        }
-
-        private IEnumerator DestroyRoutine()
-        {
-            _cancelAi.Cancel();
-            _isAttacking = false;
-            explosionObject.SetActive(true);
-            OnDisable();
-            yield return new WaitForSeconds(1.0f);
-            Destroy(gameObject);
+            _fsm.OnLogic();
         }
 
         private void LateUpdate()
         {
-            if (!_isAttacking) return;
+            if (_fsm.ActiveStateName != States.Attack) return;
             Quaternion currentRotation = gun.transform.rotation;
-            Quaternion targetRotation = Quaternion.LookRotation(Player.transform.position - gun.transform.position);
+            Quaternion targetRotation = Quaternion.LookRotation(_vision.LastPositionSeen - gun.transform.position);
             currentRotation = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
             currentRotation = GeometryHelpers.ClampEulerPitch(currentRotation, pitchRange.x, pitchRange.y);
             gun.transform.rotation = currentRotation;
         }
 
-        private async Awaitable AIAsync(CancellationToken cancellationToken)
+        private IEnumerator PowerOnRoutine()
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await WaitUntilPlayerShowsUpAsync(cancellationToken);
-                await NotifyPlayerAttackingAsync(cancellationToken);
-                _isAttacking = true;
-                Awaitable attacking = AttackAsync(cancellationToken);
-                await WaitUntilPlayerDisappearsAsync(cancellationToken);
-                _isAttacking = false;
-                await attacking;
-                await NotifyPlayerAttackOverAsync(cancellationToken);
-            }
+            yield return new WaitForSeconds(1.0f);
+            _fsm.Trigger(Triggers.PoweredOn);
         }
 
-        private async Awaitable WaitUntilPlayerShowsUpAsync(CancellationToken cancellationToken) =>
-            await WaitForPlayerAsync(float.MaxValue, cancellationToken);
-
-        private async Awaitable<bool> WaitForPlayerAsync(float maxDuration, CancellationToken cancellationToken)
+        private IEnumerator AttackRoutine()
         {
-            float startTime = Time.time;
-            while (true)
-            {
-                bool canSee = _vision.CanSee(Player.transform.position);
-                if (canSee)
-                    return true;
-                await Awaitable.WaitForSecondsAsync(0.2f, cancellationToken);
-                if (Time.time - startTime > maxDuration)
-                    return false;
-            }
-        }
-
-        private async Awaitable NotifyPlayerAttackingAsync(CancellationToken cancellationToken)
-        {
-            await Awaitable.WaitForSecondsAsync(1.0f, cancellationToken);
-        }
-
-        private async Awaitable NotifyPlayerAttackOverAsync(CancellationToken cancellationToken)
-        {
-            await Awaitable.WaitForSecondsAsync(1.0f, cancellationToken);
-        }
-
-        private async Awaitable AttackAsync(CancellationToken cancellationToken)
-        {
-            while (_isAttacking)
+            while (_fsm.ActiveStateName == States.Attack)
             {
                 for (int i = 0; i < maxSuccession; ++i)
                 {
                     gun.Fire();
-                    await Awaitable.WaitForSecondsAsync(cooldown, cancellationToken);
+                    yield return new WaitForSeconds(cooldown);
                 }
 
-                await Awaitable.WaitForSecondsAsync(successionCooldown, cancellationToken);
+                yield return new WaitForSeconds(successionCooldown);
             }
+        }
+
+        private IEnumerator PowerOffRoutine()
+        {
+            yield return new WaitForSeconds(1.0f);
+            _fsm.Trigger(Triggers.PoweredOff);
         }
 
         private void OnDamage(GameObject other)
@@ -139,17 +119,17 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             player.Hurt(damage);
         }
 
-        private async Awaitable WaitUntilPlayerDisappearsAsync(CancellationToken cancellationToken)
+        protected override void OnDamaged()
         {
-            while (true)
-            {
-                bool canSee = _vision.CanSee(Player.transform.position);
-                if (!canSee)
-                    canSee = await WaitForPlayerAsync(4.0f, cancellationToken);
-                if (!canSee)
-                    break;
-                await Awaitable.WaitForSecondsAsync(0.2f, cancellationToken);
-            }
+            _fsm.Trigger(Triggers.Damaged);
+        }
+
+        private IEnumerator DieRoutine()
+        {
+            explosionObject.SetActive(true);
+            OnDisable();
+            yield return new WaitForSeconds(1.0f);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
 {
@@ -12,16 +13,50 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
         public Transform Eye => eye;
         public float ConeAngle => coneAngle;
         public float MaxDistance => maxDistance;
+        public Transform Target { get; private set; }
 
-        public bool CanSee(Vector3 target)
+        public float LastTimeSeen { get; private set; }
+        public Vector3 LastPositionSeen { get; private set; }
+        private bool _canSee;
+
+        private async void Start()
         {
-            if (!eye) return false;
-            Vector3 direction = target - eye.position;
-            if (Vector3.Angle(eye.forward, direction) > coneAngle) return false;
-            float distance = direction.magnitude;
-            if (distance > maxDistance) return false;
-            bool obstructed = Physics.Raycast(eye.position, direction, distance, obstructionLayers.value);
-            return !obstructed;
+            try
+            {
+                while (!destroyCancellationToken.IsCancellationRequested)
+                {
+                    UpdateCanSee();
+                    await Awaitable.WaitForSecondsAsync(0.1f);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
         }
+
+        private void UpdateCanSee()
+        {
+            _canSee = false;
+            if (!eye || !Target) return;
+            Vector3 direction = Target.position - eye.position;
+            if (Vector3.Angle(eye.forward, direction) > coneAngle) return;
+            float distance = direction.magnitude;
+            if (distance > maxDistance) return;
+            bool obstructed = Physics.Raycast(eye.position, direction, distance, obstructionLayers.value);
+            if (obstructed) return;
+            _canSee = true;
+            LastTimeSeen = Time.time;
+            LastPositionSeen = Target.position;
+        }
+
+        public void SetTarget(Transform target)
+        {
+            Target = target;
+            LastTimeSeen = float.MinValue;
+            LastPositionSeen = Vector3.positiveInfinity;
+            _canSee = false;
+        }
+
+        public bool CanSee() => _canSee;
     }
 }
