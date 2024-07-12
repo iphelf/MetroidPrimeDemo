@@ -25,24 +25,21 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private EnemyVision _vision;
 
-        private StateMachine _fsm;
+        private StateMachine<State, Trigger> _fsm;
 
-        private static class States
+        private enum State
         {
-            public const string Idle = nameof(Idle);
-            public const string PowerOn = nameof(PowerOn);
-            public const string Attack = nameof(Attack);
-            public const string PowerOff = nameof(PowerOff);
-            public const string Dying = nameof(Dying);
+            Idle,
+            PowerOn,
+            Attack,
+            PowerOff,
+            Dying,
         }
 
-        private static class Triggers
+        private enum Trigger
         {
-            public const string PoweredOn = nameof(PoweredOn);
-            public const string PoweredOff = nameof(PoweredOff);
-            public const string Damaged = nameof(Damaged);
+            Damaged,
         }
-
 
         protected override void Start()
         {
@@ -53,20 +50,20 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
             gun.beam.OnDamage.AddListener(OnDamage);
 
-            _fsm = new StateMachine();
+            _fsm = new StateMachine<State, Trigger>();
 
-            _fsm.AddState(States.Idle);
-            _fsm.AddState(States.PowerOn, new CoState(this, PowerOnRoutine));
-            _fsm.AddState(States.Attack, new CoState(this, AttackRoutine));
-            _fsm.AddState(States.PowerOff, new CoState(this, PowerOffRoutine));
-            _fsm.AddState(States.Dying, new CoState(this, DieRoutine));
-            _fsm.SetStartState(States.Idle);
+            _fsm.AddState(State.Idle);
+            _fsm.AddState(State.PowerOn, new CoState<State>(this, PowerOnRoutine, needsExitTime: true));
+            _fsm.AddState(State.Attack, new CoState<State>(this, AttackRoutine));
+            _fsm.AddState(State.PowerOff, new CoState<State>(this, PowerOffRoutine, needsExitTime: true));
+            _fsm.AddState(State.Dying, new CoState<State>(this, DieRoutine));
+            _fsm.SetStartState(State.Idle);
 
-            _fsm.AddTransition(States.Idle, States.PowerOn, _ => _vision.CanSee());
-            _fsm.AddTriggerTransition(Triggers.PoweredOn, States.PowerOn, States.Attack);
-            _fsm.AddTransition(States.Attack, States.PowerOff, _ => _vision.LastTimeSeen + 4.0f < Time.time);
-            _fsm.AddTriggerTransition(Triggers.PoweredOff, States.PowerOff, States.Idle);
-            _fsm.AddTriggerTransitionFromAny(Triggers.Damaged, States.Dying);
+            _fsm.AddTransition(State.Idle, State.PowerOn, _ => _vision.CanSee());
+            _fsm.AddTransition(State.PowerOn, State.Attack);
+            _fsm.AddTransition(State.Attack, State.PowerOff, _ => _vision.LastTimeSeen + 4.0f < Time.time);
+            _fsm.AddTransition(State.PowerOff, State.Idle);
+            _fsm.AddTriggerTransitionFromAny(Trigger.Damaged, State.Dying, forceInstantly: true);
 
             _fsm.Init();
         }
@@ -78,7 +75,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private void LateUpdate()
         {
-            if (_fsm.ActiveStateName != States.Attack) return;
+            if (_fsm.ActiveStateName != State.Attack) return;
             Quaternion currentRotation = gun.transform.rotation;
             Quaternion targetRotation = Quaternion.LookRotation(_vision.LastPositionSeen - gun.transform.position);
             currentRotation = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -89,12 +86,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         private IEnumerator PowerOnRoutine()
         {
             yield return new WaitForSeconds(1.0f);
-            _fsm.Trigger(Triggers.PoweredOn);
+            _fsm.StateCanExit();
         }
 
         private IEnumerator AttackRoutine()
         {
-            while (_fsm.ActiveStateName == States.Attack)
+            while (_fsm.ActiveStateName == State.Attack)
             {
                 for (int i = 0; i < maxSuccession; ++i)
                 {
@@ -109,7 +106,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         private IEnumerator PowerOffRoutine()
         {
             yield return new WaitForSeconds(1.0f);
-            _fsm.Trigger(Triggers.PoweredOff);
+            _fsm.StateCanExit();
         }
 
         private void OnDamage(GameObject other)
@@ -121,7 +118,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         protected override void OnDamaged()
         {
-            _fsm.Trigger(Triggers.Damaged);
+            _fsm.Trigger(Trigger.Damaged);
         }
 
         private IEnumerator DieRoutine()
