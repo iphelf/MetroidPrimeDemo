@@ -44652,6 +44652,9 @@ MonoBehaviour:
     lockTarget: {fileID: 0}
   groundSnappingDistance: 0.25
   abilities: {fileID: 9014759226951534780}
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &6243619565750431993
 GameObject:
   m_ObjectHideFlags: 0

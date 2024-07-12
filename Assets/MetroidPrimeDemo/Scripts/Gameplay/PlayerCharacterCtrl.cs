@@ -20,6 +20,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         public AttributeSet attributes;
 
         [SerializeField] private float groundSnappingDistance = 0.25f;
+        public LayerMask groundLayers;
 
         public AbilitySystem abilities;
 
@@ -62,24 +63,28 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             else
                 attributes.velocity.y -= Time.deltaTime * attributes.gravity;
 
-            UpdateGrounding();
-
             _character.Move(Time.deltaTime * attributes.velocity);
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateGrounding();
         }
 
         private void UpdateGrounding()
         {
-            if (Time.time - 0.5f < attributes.lastJumpTime) return;
-
             float groundCheckDistance = attributes.wasGrounded
                 ? _character.skinWidth + groundSnappingDistance
                 : _character.skinWidth + 0.01f;
             bool isGrounded = PhysicsHelpers.IsGrounded(
-                _character, groundCheckDistance, -1,
-                out var distanceFromGround);
+                _character, groundCheckDistance, groundLayers.value,
+                out var hit);
+
+            if (Time.time - 0.5f < attributes.lastJumpTime) return;
 
             if (attributes.wasGrounded && isGrounded)
             {
+                float distanceFromGround = hit.Value.distance;
                 // snapping to the ground while on the ground
                 if (Mathf.Abs(distanceFromGround - _character.skinWidth) > 0.0f)
                     _character.Move(Vector3.down * (distanceFromGround - _character.skinWidth));

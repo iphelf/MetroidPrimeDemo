@@ -13,11 +13,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
         public Transform Eye => eye;
         public float ConeAngle => coneAngle;
         public float MaxDistance => maxDistance;
+
         public Transform Target { get; private set; }
 
+        public bool CanSee { get; private set; }
         public float LastTimeSeen { get; private set; }
         public Vector3 LastPositionSeen { get; private set; }
-        private bool _canSee;
 
         private async void Start()
         {
@@ -36,7 +37,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
 
         private void UpdateCanSee()
         {
-            _canSee = false;
+            CanSee = false;
             if (!eye || !Target) return;
             Vector3 direction = Target.position - eye.position;
             if (Vector3.Angle(eye.forward, direction) > coneAngle) return;
@@ -44,7 +45,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
             if (distance > maxDistance) return;
             bool obstructed = Physics.Raycast(eye.position, direction, distance, obstructionLayers.value);
             if (obstructed) return;
-            _canSee = true;
+            CanSee = true;
             LastTimeSeen = Time.time;
             LastPositionSeen = Target.position;
         }
@@ -54,9 +55,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.EnemyAI
             Target = target;
             LastTimeSeen = float.MinValue;
             LastPositionSeen = Vector3.positiveInfinity;
-            _canSee = false;
+            CanSee = false;
         }
-
-        public bool CanSee() => _canSee;
     }
 }

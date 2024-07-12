@@ -1,0 +1,27 @@
+﻿@startuml
+'https://plantuml.com/state-diagram
+
+hide empty description
+
+[*] -> Patrol
+Patrol --> Patrol
+Patrol --> Chase: Sensed
+Chase --> Attack: InRange
+
+state "Attack (NI)" as Attack {
+    [*] -> Aim
+    state "Telegraph (NI)" as Telegraph
+    Aim --> Telegraph
+    state "Bash (NI)" as Bash
+    Telegraph -> Bash
+    Bash -> Aim
+}
+Attack --> Chase: Not InRange
+
+Search --> Chase: Sensed
+Chase --> Search: Not Sensed
+Patrol <-- Search
+
+Any --> [*]: Damaged
+
+@enduml

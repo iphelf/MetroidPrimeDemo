@@ -53,13 +53,13 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             _fsm = new StateMachine<State, Trigger>();
 
             _fsm.AddState(State.Idle);
-            _fsm.AddState(State.PowerOn, new CoState<State>(this, PowerOnRoutine, needsExitTime: true));
-            _fsm.AddState(State.Attack, new CoState<State>(this, AttackRoutine));
-            _fsm.AddState(State.PowerOff, new CoState<State>(this, PowerOffRoutine, needsExitTime: true));
-            _fsm.AddState(State.Dying, new CoState<State>(this, DieRoutine));
+            _fsm.AddState(State.PowerOn, new CoState<State>(this, PowerOnRoutine, needsExitTime: true, loop: false));
+            _fsm.AddState(State.Attack, new CoState<State>(this, AttackRoutine, loop: false));
+            _fsm.AddState(State.PowerOff, new CoState<State>(this, PowerOffRoutine, needsExitTime: true, loop: false));
+            _fsm.AddState(State.Dying, new CoState<State>(this, DieRoutine, loop: false));
             _fsm.SetStartState(State.Idle);
 
-            _fsm.AddTransition(State.Idle, State.PowerOn, _ => _vision.CanSee());
+            _fsm.AddTransition(State.Idle, State.PowerOn, _ => _vision.CanSee);
             _fsm.AddTransition(State.PowerOn, State.Attack);
             _fsm.AddTransition(State.Attack, State.PowerOff, _ => _vision.LastTimeSeen + 4.0f < Time.time);
             _fsm.AddTransition(State.PowerOff, State.Idle);

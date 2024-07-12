@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.General
 {
@@ -6,9 +7,9 @@ namespace MetroidPrimeDemo.Scripts.General
     {
         public static bool IsGrounded(
             CharacterController character, float maxDistance, int layerMask,
-            out float distanceFromGround)
+            [NotNullWhen(true)] out RaycastHit? groundHit)
         {
-            distanceFromGround = float.NaN;
+            groundHit = null;
 
             var transform = character.transform;
             var position = transform.position + character.center;
@@ -23,7 +24,7 @@ namespace MetroidPrimeDemo.Scripts.General
                 return false;
             if (Vector3.Dot(hit.normal, up) <= 0.0f) return false;
             if (Vector3.Angle(hit.normal, up) > character.slopeLimit) return false;
-            distanceFromGround = hit.distance;
+            groundHit = hit;
             return true;
         }
     }
