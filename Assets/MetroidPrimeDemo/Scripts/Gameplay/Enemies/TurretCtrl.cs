@@ -12,6 +12,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
     public class TurretCtrl : EnemyCharacterCtrl
     {
         [SerializeField] private GameObject explosionObject;
+        [SerializeField] private Animator animator;
         [SerializeField] private TurretGunCtrl gun;
         [SerializeField] private float damage = 25.0f;
         [SerializeField] private float cooldown = 0.18f;
@@ -85,6 +86,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private IEnumerator PowerOnRoutine()
         {
+            animator?.Play("PowerOn");
             yield return new WaitForSeconds(1.0f);
             _fsm.StateCanExit();
         }
@@ -105,6 +107,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private IEnumerator PowerOffRoutine()
         {
+            animator?.Play("PowerOff");
             yield return new WaitForSeconds(1.0f);
             _fsm.StateCanExit();
         }
