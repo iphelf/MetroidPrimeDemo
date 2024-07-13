@@ -15,6 +15,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
     public class BeetleCtrl : EnemyCharacterCtrl
     {
         [SerializeField] private Animator animator;
+        [SerializeField] private PatrolWaypoints patrolWaypoints;
         [SerializeField] private float chaseStoppingDistance = 3.8f;
         [SerializeField] private float rotationSpeed = 180.0f;
         [SerializeField] private float maxBashDistance = 4.0f;
@@ -60,29 +61,24 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
                 needsExitTime: true,
                 beforeOnEnter: _ =>
                 {
-                    // Debug.Log("Enter Attack");
                     _agent.ResetPath();
                     _agent.enabled = false;
                 },
                 afterOnExit: _ =>
                 {
-                    // Debug.Log("Exit Attack");
                     _agent.enabled = true;
                     _agent.Warp(transform.position);
                 }
             );
 
-            // _fsm.StateChanged += newState => Debug.Log($"_fsm: {newState.name}");
-            // _attackFsm.StateChanged += newState => Debug.Log($"_attackFsm: {newState.name}");
-
-            _fsm.AddState(State.Patrol,
-                onEnter: _ => animator?.Play("Patrol"),
-                onExit: _ => animator?.Play("None")
-            );
+            _fsm.AddState(State.Patrol, new CoState<State>(this, PatrolRoutine, loop: true));
             _fsm.AddState(State.Search, new CoState<State>(this, SearchRoutine, loop: false));
             _fsm.AddState(State.Chase, new CoState<State>(this, ChaseRoutine, loop: true));
             _fsm.AddState(State.Die, new CoState<State>(this, DieRoutine, loop: false));
-            _attackFsm.AddState(State.Aim, onEnter: _ => animator?.Play("None"), onLogic: _ => AimUpdate());
+            _attackFsm.AddState(State.Aim,
+                onEnter: _ => animator?.Play("None"),
+                onLogic: _ => AimUpdate()
+            );
             _attackFsm.AddState(State.Telegraph, new CoState<State>(this,
                 TelegraphRoutine, needsExitTime: true, loop: false));
             _attackFsm.AddState(State.Bash, new CoState<State>(this,
@@ -115,6 +111,26 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             _fsm.OnLogic();
         }
 
+        private IEnumerator MoveTowards(Vector3 position, float stoppingDistance)
+        {
+            _agent.SetDestination(position);
+            _agent.stoppingDistance = stoppingDistance;
+            while (_agent.remainingDistance > _agent.stoppingDistance)
+                yield return new WaitForSeconds(0.5f);
+        }
+
+        private IEnumerator PatrolRoutine()
+        {
+            animator?.Play("Patrol");
+            int waypointIndex = patrolWaypoints.NearestWaypoint(transform.position, out var waypoint);
+            while (_fsm.ActiveStateName == State.Patrol)
+            {
+                yield return MoveTowards(waypoint, 0.5f);
+                yield return new WaitForSeconds(1.0f);
+                waypointIndex = patrolWaypoints.NextWaypoint(waypointIndex, out waypoint);
+            }
+        }
+
         private IEnumerator ChaseRoutine()
         {
             animator?.Play("Chase");
@@ -126,18 +142,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             } while (_agent.remainingDistance > _agent.stoppingDistance);
         }
 
-        private IEnumerator MoveTowards(Vector3 position)
-        {
-            _agent.SetDestination(position);
-            _agent.stoppingDistance = 1.0f;
-            while (_agent.remainingDistance > _agent.stoppingDistance)
-                yield return new WaitForSeconds(0.5f);
-        }
-
         private IEnumerator SearchRoutine()
         {
             animator?.Play("Search");
-            yield return MoveTowards(_lastPositionSensed);
+            yield return MoveTowards(_lastPositionSensed, 0.5f);
             yield return new WaitForSeconds(4.0f);
             _fsm.RequestStateChange(State.Patrol);
         }

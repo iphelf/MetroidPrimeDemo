@@ -6,6 +6,7 @@ hide empty description
 [*] -> Patrol
 Patrol --> Patrol
 Patrol --> Chase: Sensed
+Chase --> Chase
 Chase --> Attack: InRange
 
 state "Attack (NI)" as Attack {
