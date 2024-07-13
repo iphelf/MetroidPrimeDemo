@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using DG.Tweening;
 using MetroidPrimeDemo.Scripts.Gameplay.EnemyAI;
+using MetroidPrimeDemo.Scripts.General;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +21,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         [SerializeField] private float rotationSpeed = 180.0f;
         [SerializeField] private float maxBashDistance = 4.0f;
         [SerializeField] private float bashDuration = 0.3f;
+        [SerializeField] private TriggerListener bodyHitbox;
+        [SerializeField] private float bodyDamage = 10.0f;
+        [SerializeField] private TriggerListener bashHitbox;
+        [SerializeField] private float bashDamage = 25.0f;
 
         private NavMeshAgent _agent;
         private Rigidbody _body;
@@ -55,6 +60,10 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             _vision.SetTarget(Player.transform);
             _hearing = GetComponent<EnemyHearing>();
             _hearing.SetTarget(Player.transform);
+
+            bodyHitbox.OnTriggerEnterEvent.AddListener(OnBodyHit);
+            bashHitbox.OnTriggerEnterEvent.AddListener(OnBashHit);
+            bashHitbox.gameObject.SetActive(false);
 
             _fsm = new StateMachine<State>();
             _attackFsm = new HybridStateMachine<State>(
@@ -138,7 +147,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
             {
                 _agent.SetDestination(_lastPositionSensed);
                 _agent.stoppingDistance = chaseStoppingDistance;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
             } while (_agent.remainingDistance > _agent.stoppingDistance);
         }
 
@@ -182,11 +191,30 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         {
             animator?.Play("Bash");
             Vector3 bashTarget = transform.position + transform.forward * maxBashDistance;
+            bashHitbox.gameObject.SetActive(true);
             yield return _body.DOMove(bashTarget, bashDuration).WaitForCompletion();
+            bashHitbox.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.5f);
             if (!_attackFsm.HasPendingTransition)
                 _attackFsm.RequestStateChange(State.Aim);
             _attackFsm.StateCanExit();
+        }
+
+        private void OnBashHit(Collider other)
+        {
+            if (other.GetComponent<PlayerCharacterCtrl>() != Player)
+            {
+                return;
+            }
+
+            Player.Hurt(bashDamage);
+        }
+
+        private void OnBodyHit(Collider other)
+        {
+            if (other.GetComponent<PlayerCharacterCtrl>() != Player)
+                return;
+            Player.Hurt(bodyDamage);
         }
 
         protected override void OnDamaged()
@@ -196,6 +224,8 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private IEnumerator DieRoutine()
         {
+            bodyHitbox.gameObject.SetActive(false);
+            bashHitbox.gameObject.SetActive(false);
             _agent.ResetPath();
             _agent.enabled = false;
             animator?.Play("Die");
