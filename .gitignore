@@ -72,10 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Baked data
-/Assets/MetroidPrimeDemo/Scenes/SampleScene.meta
-/Assets/MetroidPrimeDemo/Scenes/SampleScene
-/Assets/MetroidPrimeDemo/Scenes/Level.meta
-/Assets/MetroidPrimeDemo/Scenes/Level
-
 /.idea
