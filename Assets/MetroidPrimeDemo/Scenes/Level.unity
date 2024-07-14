@@ -18061,9 +18061,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598522138955835709, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7050092878659783064, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
       propertyPath: m_text
       value: Pause Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050092878659783064, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_margin.z
+      value: -366.1961
+      objectReference: {fileID: 0}
+    - target: {fileID: 7303906229459964586, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7303906229459964586, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7303906229459964586, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7375219272891576308, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
       propertyPath: m_Pivot.x
@@ -18095,7 +18127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7375219272891576308, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 95.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7375219272891576308, guid: 32a0f4c7ac2e40d4997a6769dfe372ee, type: 3}
       propertyPath: m_LocalPosition.x
@@ -45336,7 +45368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1680906664
 RectTransform:
   m_ObjectHideFlags: 0
