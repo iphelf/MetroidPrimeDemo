@@ -35,7 +35,7 @@ namespace MetroidPrimeDemo.Scripts.Modules
             bool hasMissileAbility = player.abilities.ContainsAbility(AbilityType.FireMissile);
             bool hasChargeBeamAbility = player.abilities.ContainsAbility(AbilityType.ChargeBeam);
             int obtained = energyTanks + missileTanks + (hasMissileAbility ? 1 : 0) + (hasChargeBeamAbility ? 1 : 0);
-            int total = 1 + 1 + 1 + 1;
+            int total = 2 + 3 + 1 + 1;
             float completion = obtained * 1.0f / total;
             Outcome = new GameOutcome(alive, completion, Time.time - _lastGameBeginTime);
 
