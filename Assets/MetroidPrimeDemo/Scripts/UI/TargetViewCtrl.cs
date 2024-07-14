@@ -18,6 +18,7 @@ namespace MetroidPrimeDemo.Scripts.UI
         private void Start()
         {
             canvasGroup.alpha = 0.0f;
+            healthBar.gameObject.SetActive(false);
         }
 
         private void Update()

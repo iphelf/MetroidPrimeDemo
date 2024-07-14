@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay
 {
-    [SelectionBase]
     public class Aimable : MonoBehaviour
     {
         private static readonly HashSet<Aimable> EnabledAimableSet = new();

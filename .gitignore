@@ -75,5 +75,7 @@ crashlytics-build.properties
 # Baked data
 /Assets/MetroidPrimeDemo/Scenes/SampleScene.meta
 /Assets/MetroidPrimeDemo/Scenes/SampleScene
+/Assets/MetroidPrimeDemo/Scenes/Level.meta
+/Assets/MetroidPrimeDemo/Scenes/Level
 
 /.idea

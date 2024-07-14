@@ -131,6 +131,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
         private IEnumerator PatrolRoutine()
         {
             animator?.Play("Patrol");
+            if (!patrolWaypoints) yield break;
             int waypointIndex = patrolWaypoints.NearestWaypoint(transform.position, out var waypoint);
             while (_fsm.ActiveStateName == State.Patrol)
             {
@@ -189,8 +190,9 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Enemies
 
         private IEnumerator BashRoutine()
         {
-            animator?.Play("Bash");
             Vector3 bashTarget = transform.position + transform.forward * maxBashDistance;
+            yield return new WaitForSeconds(0.5f);
+            animator?.Play("Bash");
             bashHitbox.gameObject.SetActive(true);
             yield return _body.DOMove(bashTarget, bashDuration).WaitForCompletion();
             bashHitbox.gameObject.SetActive(false);

@@ -13,6 +13,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
         [SerializeField] private float underChargeDamage = 10.0f;
         [SerializeField] private float partialChargeDamage = 35.0f;
         [SerializeField] private float fullChargeDamage = 50.0f;
+        [SerializeField] private float attractionRange = 15.0f;
 
         private InputAction _input;
 
@@ -114,8 +115,12 @@ namespace MetroidPrimeDemo.Scripts.Gameplay.Player.Abilities
 
             if (_charging)
             {
+                float sqrAttractionRange = attractionRange * attractionRange;
                 foreach (var go in GameObject.FindGameObjectsWithTag("FloatingPickup"))
                 {
+                    if (Vector3.SqrMagnitude(go.transform.position - player.transform.position)
+                        > sqrAttractionRange)
+                        continue;
                     var pickup = go.GetComponent<FloatingPickup>();
                     pickup.MoveTowards(player.transform.position);
                 }

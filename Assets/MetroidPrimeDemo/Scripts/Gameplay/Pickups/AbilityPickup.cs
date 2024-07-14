@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay.Pickups
 {
+    [SelectionBase]
     public class AbilityPickup : Pickup
     {
         [SerializeField] private InputConfig inputConfig;

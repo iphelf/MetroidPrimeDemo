@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MetroidPrimeDemo.Scripts.Gameplay
 {
+    [SelectionBase]
     public class EnemyCharacterCtrl : Aimable
     {
         public float maxHealth;
@@ -9,6 +11,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
         public float HealthRatio => maxHealth == 0.0f ? 0.0f : _health / maxHealth;
         protected PlayerCharacterCtrl Player;
         private bool _destroying;
+        public EventHandler OnKill;
 
         protected virtual void Start()
         {
@@ -25,6 +28,7 @@ namespace MetroidPrimeDemo.Scripts.Gameplay
             if (_health == 0.0f)
             {
                 _destroying = true;
+                OnKill?.Invoke(this, null);
                 OnDamaged();
             }
         }
